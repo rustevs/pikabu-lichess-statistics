@@ -374,7 +374,7 @@ tbody tr:nth-child(even){background:rgba(255,220,170,.018);}
 <h1>Lichess — <span class="accent">Официальный клуб Пикабу</span></h1>
 <div class="sub">Командные турниры Bundesliga Lichess · Blitz + Rapid</div>
 <div class="note">Источник: официальный клуб Пикабу на Lichess · <span id="liveStatus">Автообновление · каждые 5 минут</span></div>
-<div class="ysel"><button id="refreshBtn" type="button" onclick="manualRefresh()">↻ Обновить</button><label for="yearSelect">Год:</label><select id="yearSelect" onchange="switchYear()"><option value="2026">2026</option><option value="2025">2025</option><option value="all" selected>Все годы (2025–2026)</option></select></div>
+<div class="ysel"><button id="refreshBtn" type="button" onclick="manualRefresh()">↻ Обновить</button><label for="yearSelect">Год:</label><select id="yearSelect" onchange="switchYear()"><option value="2026" selected>2026</option><option value="2025">2025</option><option value="all">Все годы (2025–2026)</option></select></div>
 </div>
 <div class="container">
 <div class="grid" id="statsGrid"></div>
@@ -432,9 +432,9 @@ oninput="filterT(this.value)"></div>
 </div>
 
 <div class="sec">
-<div class="sec-h" onclick="toggleSec(this)">
+<div class="sec-h coll" onclick="toggleSec(this)">
 <h2>🔎 Контроль турниров</h2><span class="tog">▼</span></div>
-<div class="sec-b">
+<div class="sec-b hidden">
 <div class="diag-grid">
   <div><strong id="diagTotal">0</strong><span>Турниров в базе</span></div>
   <div><strong id="diagUnique">0</strong><span>Уникальных ID</span></div>
@@ -452,7 +452,7 @@ oninput="filterT(this.value)"></div>
 <script>
 const EMBEDDED_DATA = {};
 const ALL_DATA = {};
-let cy = 'all';
+let cy = '2026';
 const EXTRA_TOURNAMENT_IDS = [
   'odOIaaey','AJ5WjKph','ypb0n1bF','wbv1Yoml','5RUrKNka','okUGKd6p','v7GwRQFM',
   'LPn3V079','ztXsM4oX','tKwdekId','87e12yIM','cX6BR0z9','KBgSCl7b','uzzojPVd','r5oN9M6g','Kg2AKVmB','4DyPaSf3','7BaAz0Zw',
@@ -469,8 +469,9 @@ const LIVE_CFG = {
   teamUrl: 'https://lichess.org/team/Gm3XMvWV',
   api: 'https://lichess.org/api',
   maxTournaments: 100000,
-  refreshLatest: 20,
-  refreshMs: 5 * 60 * 1000,
+  newScanLimit: 200,
+  refreshLatest: 0,
+  refreshMs: 30 * 60 * 1000,
   cacheKey: 'pikabu-lichess-history-v13',
   cacheTtlMs: 60 * 1000,
   dbName: 'PikabuLichessStats',
@@ -572,7 +573,8 @@ function renderPlayerTable(id,rows,total,d){
   };
   let h='<tr>'+th('#')+th('Игрок',null,'left');
   groups.forEach(g=>{
-    h+=th('Зачётные очки '+g.label,'Сумма зачётных очков · '+g.label)+th('Турнирные очки '+g.label,'Сумма турнирных очков · '+g.label);
+    h+=th('<span class="th-title">Зачётные очки</span><span class="th-speed">'+g.label+'</span>','Сумма зачётных очков · '+g.label,'score-head')+
+      th('<span class="th-title">Турнирные очки</span><span class="th-speed">'+g.label+'</span>','Сумма турнирных очков · '+g.label,'score-head');
   });
   h+=th('Зачётные Σ','Сумма зачётных очков')+th('Турнирные Σ','Сумма турнирных очков')+th('🥇')+th('🥈')+th('🥉')+th('Лучш.')+th('Турн.')+'</tr>';
   t.querySelector('thead').innerHTML=h;
@@ -746,8 +748,9 @@ async function loadDB(){try{
   }else a.push(t);
   });
   rebuildAll();renderAll();return items.length}catch(e){console.warn(e);return 0;}}
-async function getMetas(){
-  const metas=await apiNdjson(LIVE_CFG.api+'/team/'+LIVE_CFG.teamId+'/arena?max='+LIVE_CFG.maxTournaments);
+async function getMetas(fullScan=false){
+  const limit=fullScan?LIVE_CFG.maxTournaments:(LIVE_CFG.newScanLimit||200);
+  const metas=await apiNdjson(LIVE_CFG.api+'/team/'+LIVE_CFG.teamId+'/arena?max='+limit);
   const byId=new Map(metas.map(m=>[m.id,m]));
   for(const id of EXTRA_TOURNAMENT_IDS){
     if(byId.has(id))continue;
@@ -808,7 +811,51 @@ async function syncOne(meta){
   }catch(e){console.warn('sync',meta.id,e);return null;}
 }
 let syncing=false;
-async function refreshFromLichess(force=false){if(syncing)return;syncing=true;try{const cache=+localStorage.getItem(LIVE_CFG.cacheKey+':time')||0;if(!force&&Date.now()-cache<LIVE_CFG.cacheTtlMs){liveStatus('данные недавно проверены');return;}liveStatus('загрузка истории Пикабу…');const metas=await getMetas();const enriched=enrichStoredFromMetas(metas);if(enriched){for(const y of Object.keys(ALL_DATA).filter(y=>/^\d{4}$/.test(y))){for(const t of (ALL_DATA[y].tournaments||[])){await dbPut(t);}}}const known=new Set(Object.keys(ALL_DATA).filter(y=>/^\d{4}$/.test(y)).flatMap(y=>(ALL_DATA[y].tournaments||[]).map(t=>t.id)));const latest=new Set(metas.slice(0,LIVE_CFG.refreshLatest).map(m=>m.id));const targets=metas.filter(m=>{const ymeta=new Date(m.startsAt||m.createdAt||0).getFullYear();if(ymeta!==2025&&ymeta!==2026)return false;const metaDate=dateParts(m.startsAt||m.createdAt).date;if(EXCLUDED_DATES.has(metaDate))return false;const y=String((ALL_DATA.all?.tournaments||[]).find(t=>t.id===m.id)?.date||m.startsAt||m.createdAt||'').slice(0,4);const old=(ALL_DATA[y]?.tournaments||[]).find(t=>t.id===m.id);const needsRepair=!!old&&(!old.players||old.players.length===0||!old.timeControl||!old.league||old.teamPlayerCount===0||normalizeLeague(old.league,old.name)!==old.league||old.teamRank==null);return EXTRA_TOURNAMENT_IDS.includes(m.id)||!known.has(m.id)||latest.has(m.id)||needsRepair;});let n=0;for(const m of targets){liveStatus('синхронизация '+(++n)+' / '+targets.length+' · '+(m.name||m.id));if(EXTRA_TOURNAMENT_IDS.includes(m.id))await syncExtraTournament(m.id);else await syncOne(m);if(n%5===0){rebuildAll();renderAll();}await sleep(120);}for(const id of EXTRA_TOURNAMENT_IDS){const present=(ALL_DATA.all?.tournaments||[]).some(t=>t.id===id);if(!present){liveStatus('повторная загрузка ручного ID · '+id);await syncExtraTournament(id);}}rebuildAll();renderAll();localStorage.setItem(LIVE_CFG.cacheKey+':time',Date.now());const count=ALL_DATA.all.tournaments.length;liveStatus('обновлено · турниров: '+count+' · автообновление через 5 минут · '+new Date().toLocaleTimeString('ru-RU'));document.getElementById('footerInfo').textContent='Накопительная база: IndexedDB · турниров: '+count+' · автообновление: каждые 5 минут · последнее обновление: '+new Date().toLocaleString('ru-RU');}catch(e){console.warn(e);liveStatus('не удалось обновить — локальная история сохранена');}finally{syncing=false;}}
+async function refreshFromLichess(force=false){
+  if(syncing)return;
+  syncing=true;
+  try{
+    const cache=+localStorage.getItem(LIVE_CFG.cacheKey+':time')||0;
+    if(!force&&Date.now()-cache<LIVE_CFG.cacheTtlMs){liveStatus('данные недавно проверены');return;}
+    liveStatus('проверка новых турниров…');
+    const known=new Set(Object.keys(ALL_DATA).filter(y=>/^\d{4}$/.test(y)).flatMap(y=>(ALL_DATA[y].tournaments||[]).map(t=>t.id)));
+    const initialLoad=known.size===0;
+    const metas=await getMetas(initialLoad);
+    const targets=metas.filter(m=>{
+      const ymeta=new Date(m.startsAt||m.createdAt||0).getFullYear();
+      if(ymeta!==2025&&ymeta!==2026)return false;
+      const metaDate=dateParts(m.startsAt||m.createdAt).date;
+      if(EXCLUDED_DATES.has(metaDate))return false;
+      return !known.has(m.id);
+    });
+    let n=0, added=0;
+    for(const m of targets){
+      liveStatus('загрузка нового турнира '+(++n)+' / '+targets.length+' · '+(m.name||m.id));
+      const t=EXTRA_TOURNAMENT_IDS.includes(m.id)?await syncExtraTournament(m.id):await syncOne(m);
+      if(t)added++;
+      if(n%5===0){rebuildAll();renderAll();}
+      await sleep(120);
+    }
+    // Manual IDs are checked only when they are not already in the local database.
+    for(const id of EXTRA_TOURNAMENT_IDS){
+      const present=(ALL_DATA.all?.tournaments||[]).some(t=>t.id===id);
+      if(!present){
+        liveStatus('загрузка ручного ID · '+id);
+        const t=await syncExtraTournament(id);
+        if(t)added++;
+      }
+    }
+    rebuildAll();renderAll();
+    localStorage.setItem(LIVE_CFG.cacheKey+':time',Date.now());
+    const count=ALL_DATA.all.tournaments.length;
+    const intervalMin=Math.round(LIVE_CFG.refreshMs/60000);
+    liveStatus((added?'добавлено: '+added+' · ':'новых турниров нет · ')+'следующая проверка через '+intervalMin+' мин · '+new Date().toLocaleTimeString('ru-RU'));
+    document.getElementById('footerInfo').textContent='Накопительная база: IndexedDB · турниров: '+count+' · проверка новых турниров: каждые '+intervalMin+' минут · последнее обновление: '+new Date().toLocaleString('ru-RU');
+  }catch(e){
+    console.warn(e);
+    liveStatus('не удалось проверить новые турниры — локальная история сохранена');
+  }finally{syncing=false;}
+}
 function manualRefresh(){const b=document.getElementById('refreshBtn');if(b)b.disabled=true;refreshFromLichess(true).finally(()=>{if(b)b.disabled=false;});}
 async function fullHistorySync(){const b=document.getElementById('fullSyncBtn');if(b)b.disabled=true;try{localStorage.removeItem(LIVE_CFG.cacheKey+':time');await refreshFromLichess(true);}finally{if(b)b.disabled=false;}}
 async function saveUpdatedHtml(){
@@ -825,7 +872,28 @@ async function saveUpdatedHtml(){
   }catch(e){console.error(e);liveStatus('не удалось сохранить обновлённый файл');}
   finally{if(b)b.disabled=false;}
 }
-async function bootLive(){try{await loadDB();liveStatus('первичная синхронизация…');await refreshFromLichess(true);liveStatus('автообновление · каждые 5 минут');}catch(e){console.warn(e);liveStatus('локальные данные · повторная проверка через 5 минут');}setInterval(()=>{refreshFromLichess(true);},LIVE_CFG.refreshMs);}
+let autoTimer=null;
+function scheduleAutoRefresh(){
+  if(autoTimer)clearTimeout(autoTimer);
+  autoTimer=setTimeout(async()=>{
+    await refreshFromLichess(false);
+    scheduleAutoRefresh();
+  },LIVE_CFG.refreshMs);
+}
+async function bootLive(){
+  try{
+    await loadDB();
+    liveStatus('первичная проверка новых турниров…');
+    await refreshFromLichess(true);
+    const intervalMin=Math.round(LIVE_CFG.refreshMs/60000);
+    liveStatus('автообновление · каждые '+intervalMin+' минут');
+  }catch(e){
+    console.warn(e);
+    const intervalMin=Math.round(LIVE_CFG.refreshMs/60000);
+    liveStatus('локальные данные · повторная проверка через '+intervalMin+' минут');
+  }
+  scheduleAutoRefresh();
+}
 window.addEventListener('DOMContentLoaded',bootLive);
 </script>
 
@@ -851,34 +919,34 @@ window.addEventListener('DOMContentLoaded',bootLive);
   }
   #mainTable,
   #fullTable{
-    min-width:560px !important;
-    width:560px !important;
-    font-size:10px !important;
+    min-width:0 !important;
+    width:100% !important;
+    font-size:9.5px !important;
     table-layout:fixed;
   }
-  #mainTable th,
-  #mainTable td,
-  #fullTable th,
-  #fullTable td{
-    padding:5px 3px !important;
+  #mainTable th,#mainTable td,#fullTable th,#fullTable td{
+    padding:4px 2px !important;
     white-space:nowrap;
   }
-  #mainTable th:first-child,
-  #mainTable td:first-child,
-  #fullTable th:first-child,
-  #fullTable td:first-child{width:28px;}
-  #mainTable th:nth-child(2),
-  #mainTable td:nth-child(2),
-  #fullTable th:nth-child(2),
-  #fullTable td:nth-child(2){width:105px;overflow:hidden;text-overflow:ellipsis;}
-  #mainTable th:nth-child(n+3):nth-child(-n+6),
-  #mainTable td:nth-child(n+3):nth-child(-n+6),
-  #fullTable th:nth-child(n+3):nth-child(-n+6),
-  #fullTable td:nth-child(n+3):nth-child(-n+6){width:58px;}
-  #mainTable th:nth-child(n+7),
-  #mainTable td:nth-child(n+7),
-  #fullTable th:nth-child(n+7),
-  #fullTable td:nth-child(n+7){width:48px;}
+  #mainTable thead th.score-head,#fullTable thead th.score-head{
+    white-space:normal !important;
+    line-height:1.05;
+    vertical-align:middle;
+  }
+  #mainTable thead th.score-head .th-title,#fullTable thead th.score-head .th-title{
+    display:block;
+  }
+  #mainTable thead th.score-head .th-speed,#fullTable thead th.score-head .th-speed{
+    display:block;
+    font-size:9px;
+    margin-top:2px;
+    color:var(--accent);
+    font-weight:600;
+  }
+  #mainTable th:first-child,#mainTable td:first-child,#fullTable th:first-child,#fullTable td:first-child{width:24px;}
+  #mainTable th:nth-child(2),#mainTable td:nth-child(2),#fullTable th:nth-child(2),#fullTable td:nth-child(2){width:88px;overflow:hidden;text-overflow:ellipsis;}
+  #mainTable th:nth-child(n+3):nth-child(-n+6),#mainTable td:nth-child(n+3):nth-child(-n+6),#fullTable th:nth-child(n+3):nth-child(-n+6),#fullTable td:nth-child(n+3):nth-child(-n+6){width:42px;}
+  #mainTable th:nth-child(n+7),#mainTable td:nth-child(n+7),#fullTable th:nth-child(n+7),#fullTable td:nth-child(n+7){width:34px;}
 
   #podiumTable{
     min-width:100% !important;
@@ -970,5 +1038,11 @@ window.addEventListener('DOMContentLoaded',bootLive);
   .ysel #refreshBtn{width:100%;margin:0;}
   .ysel label{font-size:12px;color:var(--dim);text-align:left;}
   .ysel select{width:100%;min-width:0;box-sizing:border-box;padding:9px 12px;font-size:14px;}
+}
+
+@media (max-width: 600px){
+  .sw:has(#mainTable), .sw:has(#fullTable){
+    overflow-x:hidden !important;
+  }
 }
 </style>
