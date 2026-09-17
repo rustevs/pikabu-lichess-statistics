@@ -304,14 +304,77 @@ tbody tr:nth-child(even){background:rgba(255,220,170,.018);}
 .titem{background:rgba(31,16,9,.72);}
 .titem .tc{background:rgba(58,32,18,.92);border-color:rgba(155,103,56,.25);}
 </style>
+
+<style>
+
+/* ===== Mobile adaptation ===== */
+@media (max-width: 768px) {
+  .header { padding: 18px 12px; }
+  .header h1 { font-size: 21px; line-height: 1.25; }
+  .header .sub { font-size: 12px; line-height: 1.4; }
+  .header .note { font-size: 11px; }
+  .ysel { display:flex; flex-wrap:wrap; justify-content:center; gap:7px; }
+  .ysel button, .ysel select { min-height:40px; font-size:13px; }
+  .ysel button { margin-right:0 !important; padding:8px 10px !important; }
+  .ysel select { padding:8px 11px; max-width:100%; }
+  .container { padding:14px 10px; }
+  .grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; margin-bottom:14px; }
+  .card { padding:12px 7px; border-radius:10px; }
+  .card .val { font-size:24px; }
+  .card .lbl { font-size:10px; line-height:1.25; }
+  .sec { border-radius:10px; margin-bottom:14px; }
+  .sec-h { padding:11px 13px; }
+  .sec-h h2 { font-size:15px; }
+  .sec-h .tog { font-size:16px; }
+  .tabs { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .tab { flex:0 0 auto; padding:9px 13px; font-size:12px; }
+  .sbox { padding:8px 10px; }
+  .sbox input { max-width:none; font-size:12px; padding:8px 10px; }
+  .sw { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  table { min-width:720px; font-size:11px; }
+  thead th, tbody td { padding:7px 5px; }
+  .tlist { overflow-x:hidden; }
+  .titem { display:grid; grid-template-columns:auto auto 1fr auto; gap:6px 8px; padding:10px 11px; align-items:center; }
+  .titem .date { min-width:0; font-size:12px; }
+  .titem .wd { min-width:0; font-size:10px; }
+  .titem .tc { min-width:0; font-size:10px; padding:2px 6px; }
+  .titem .cnt { font-size:10px; grid-column:1 / 3; }
+  .titem .tr { margin-left:0; font-size:10px; grid-column:3 / 5; text-align:right; }
+  .titem .tnm { grid-column:1 / 4; min-width:0; width:100%; font-size:10px; }
+  .titem .exp { grid-column:4; grid-row:2; justify-self:end; }
+  .tdet { overflow-x:auto; }
+  .tdet > div { min-width:0; }
+  .visuals { grid-template-columns:1fr !important; gap:10px !important; }
+  .visual-card { padding:12px !important; }
+  .diag-grid { grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:7px !important; }
+  .diag-grid>div { padding:9px; }
+  .diag-grid strong { font-size:17px; }
+  .diag-grid span { font-size:10px; }
+  .footer { padding:16px 10px; font-size:11px; }
+}
+@media (max-width: 480px) {
+  .header h1 { font-size:18px; }
+  .header .sub { font-size:11px; }
+  .ysel { display:grid; grid-template-columns:1fr 1fr; width:100%; max-width:390px; margin:0 auto; }
+  .ysel label { grid-column:1 / -1; font-size:11px; }
+  .ysel button, .ysel select { width:100%; }
+  .ysel #saveBtn { grid-column:1 / -1; }
+  .grid { grid-template-columns:1fr 1fr; }
+  .card .val { font-size:21px; }
+  .card .lbl { font-size:9px; }
+  .sec-h h2 { font-size:14px; }
+  .titem { grid-template-columns:auto auto 1fr auto; }
+  .titem .tr { font-size:9px; }
+  .titem .tnm { font-size:9px; }
+}
+</style>
 </head>
 <body>
 <div class="header">
 <h1>Lichess — <span class="accent">Официальный клуб Пикабу</span></h1>
 <div class="sub">Командные турниры Bundesliga Lichess · Blitz + Rapid</div>
-<div class="note">Источник: официальный клуб Пикабу на Lichess · <span id="liveStatus">Данные из сохранённой базы</span></div>
-<div class="ysel"><button id="refreshBtn" type="button" onclick="manualRefresh()" style="padding:8px 14px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text);cursor:pointer;margin-right:8px;">↻ Обновить</button><button id="fullSyncBtn" type="button" onclick="fullHistorySync()" style="padding:8px 14px;border:1px solid var(--accent);border-radius:8px;background:var(--card);color:var(--accent);cursor:pointer;margin-right:8px;">⇩ Вся история</button><button id="saveBtn" type="button" onclick="saveUpdatedHtml()" style="padding:8px 14px;border:1px solid var(--accent2);border-radius:8px;background:var(--card);color:var(--accent2);cursor:pointer;margin-right:8px;">💾 Сохранить обновлённый файл</button><label>Год:</label>
-<select id="yearSelect" onchange="switchYear()"><option value="2026">2026</option><option value="2025">2025</option><option value="all" selected>Все годы (2025–2026)</option></select></div>
+<div class="note">Источник: официальный клуб Пикабу на Lichess · <span id="liveStatus">Автообновление · каждые 5 минут</span></div>
+<div class="ysel"><button id="refreshBtn" type="button" onclick="manualRefresh()">↻ Обновить</button><label for="yearSelect">Год:</label><select id="yearSelect" onchange="switchYear()"><option value="2026">2026</option><option value="2025">2025</option><option value="all" selected>Все годы (2025–2026)</option></select></div>
 </div>
 <div class="container">
 <div class="grid" id="statsGrid"></div>
@@ -382,7 +445,7 @@ oninput="filterT(this.value)"></div>
 </div>
 <div id="diagMissing" class="mini-note" style="margin-top:12px"></div>
 </div></div>
-<div class="footer"><span id="footerInfo">Накопительная база: IndexedDB · Ручное обновление из Lichess API</span> ·
+<div class="footer"><span id="footerInfo">Накопительная база: IndexedDB · Автообновление из Lichess API</span> ·
 <a href="https://lichess.org/team/Gm3XMvWV" target="_blank">Страница команды Пикабу</a>
 </div>
 
@@ -407,7 +470,8 @@ const LIVE_CFG = {
   api: 'https://lichess.org/api',
   maxTournaments: 100000,
   refreshLatest: 20,
-  cacheKey: 'pikabu-lichess-history-v12',
+  refreshMs: 5 * 60 * 1000,
+  cacheKey: 'pikabu-lichess-history-v13',
   cacheTtlMs: 60 * 1000,
   dbName: 'PikabuLichessStats',
   dbVersion: 4,
@@ -444,7 +508,7 @@ function isExcludedTournament(t){return String(t?.date||'').replace(/-/g,'.').sl
 function filterExcluded(tournaments){return (tournaments||[]).filter(t=>!isExcludedTournament(t));}
 
 function bindSort(id){const t=document.getElementById(id);if(!t)return;t.querySelectorAll('thead th').forEach((h,i)=>h.onclick=()=>sortBy(id,i));}
-function sortBy(id,col){const t=document.getElementById(id),tb=t.querySelector('tbody');let rows=[...tb.querySelectorAll('tr')];const total=rows.find(r=>r.style.borderTop);rows=rows.filter(r=>r!==total);const key=id+'_'+col;const asc=sortState[key]==='asc';sortState[key]=asc?'desc':'asc';rows.sort((a,b)=>{const va=a.cells[col]?.textContent.trim()||'',vb=b.cells[col]?.textContent.trim()||'';const na=parseFloat(va),nb=parseFloat(vb);if(!isNaN(na)&&!isNaN(nb))return asc?na-nb:nb-na;return asc?va.localeCompare(vb,'ru',{numeric:true}):vb.localeCompare(va,'ru',{numeric:true});});rows.forEach(r=>tb.appendChild(r));if(total)tb.appendChild(total);rows.forEach((r,i)=>{if(r.cells[0])r.cells[0].textContent=String(i+1);});t.querySelectorAll('thead th').forEach((h,i)=>h.innerHTML=h.innerHTML.replace(/ [▼▲]$/,''));t.querySelectorAll('thead th')[col].innerHTML+=' '+(asc?'▲':'▼');}
+function sortBy(id,col){const t=document.getElementById(id),tb=t.querySelector('tbody');let rows=[...tb.querySelectorAll('tr')];const total=rows.find(r=>r.style.borderTop);rows=rows.filter(r=>r!==total);const key=id+'_'+col;const asc=sortState[key]==='asc';sortState[key]=asc?'desc':'asc';rows.sort((a,b)=>{const va=a.cells[col]?.textContent.trim()||'',vb=b.cells[col]?.textContent.trim()||'';const na=parseFloat(va),nb=parseFloat(vb);if(!isNaN(na)&&!isNaN(nb))return asc?na-nb:nb-na;return asc?va.localeCompare(vb):vb.localeCompare(va);});rows.forEach((r,i)=>{if(r.cells[0])r.cells[0].textContent=i+1;tb.appendChild(r);});if(total)tb.appendChild(total);t.querySelectorAll('thead th').forEach((h,i)=>h.innerHTML=h.innerHTML.replace(/ [▼▲]$/,''));t.querySelectorAll('thead th')[col].innerHTML+=' '+(asc?'▲':'▼');}
 function switchYear(){cy=document.getElementById('yearSelect').value;renderAll();}
 function toggleSec(h){h.classList.toggle('coll');h.nextElementSibling.classList.toggle('hidden');}
 function switchTab(e,id){e.currentTarget.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('act'));e.currentTarget.classList.add('act');e.currentTarget.parentElement.parentElement.querySelectorAll('.tc2').forEach(c=>c.classList.remove('act'));document.getElementById(id).classList.add('act');}
@@ -744,7 +808,7 @@ async function syncOne(meta){
   }catch(e){console.warn('sync',meta.id,e);return null;}
 }
 let syncing=false;
-async function refreshFromLichess(force=false){if(syncing)return;syncing=true;try{const cache=+localStorage.getItem(LIVE_CFG.cacheKey+':time')||0;if(!force&&Date.now()-cache<LIVE_CFG.cacheTtlMs){liveStatus('данные недавно проверены');return;}liveStatus('загрузка истории Пикабу…');const metas=await getMetas();const enriched=enrichStoredFromMetas(metas);if(enriched){for(const y of Object.keys(ALL_DATA).filter(y=>/^\d{4}$/.test(y))){for(const t of (ALL_DATA[y].tournaments||[])){await dbPut(t);}}}const known=new Set(Object.keys(ALL_DATA).filter(y=>/^\d{4}$/.test(y)).flatMap(y=>(ALL_DATA[y].tournaments||[]).map(t=>t.id)));const latest=new Set(metas.slice(0,LIVE_CFG.refreshLatest).map(m=>m.id));const targets=metas.filter(m=>{const ymeta=new Date(m.startsAt||m.createdAt||0).getFullYear();if(ymeta!==2025&&ymeta!==2026)return false;const metaDate=dateParts(m.startsAt||m.createdAt).date;if(EXCLUDED_DATES.has(metaDate))return false;const y=String((ALL_DATA.all?.tournaments||[]).find(t=>t.id===m.id)?.date||m.startsAt||m.createdAt||'').slice(0,4);const old=(ALL_DATA[y]?.tournaments||[]).find(t=>t.id===m.id);const needsRepair=!!old&&(!old.players||old.players.length===0||!old.timeControl||!old.league||old.teamPlayerCount===0||normalizeLeague(old.league,old.name)!==old.league||old.teamRank==null);return EXTRA_TOURNAMENT_IDS.includes(m.id)||!known.has(m.id)||latest.has(m.id)||needsRepair;});let n=0;for(const m of targets){liveStatus('синхронизация '+(++n)+' / '+targets.length+' · '+(m.name||m.id));if(EXTRA_TOURNAMENT_IDS.includes(m.id))await syncExtraTournament(m.id);else await syncOne(m);if(n%5===0){rebuildAll();renderAll();}await sleep(120);}for(const id of EXTRA_TOURNAMENT_IDS){const present=(ALL_DATA.all?.tournaments||[]).some(t=>t.id===id);if(!present){liveStatus('повторная загрузка ручного ID · '+id);await syncExtraTournament(id);}}rebuildAll();renderAll();localStorage.setItem(LIVE_CFG.cacheKey+':time',Date.now());const count=ALL_DATA.all.tournaments.length;liveStatus('готово · турниров: '+count+' · обновлено: '+targets.length+' · метаданные: '+enriched+' · '+new Date().toLocaleTimeString('ru-RU'));document.getElementById('footerInfo').textContent='Накопительная база: IndexedDB · турниров: '+count+' · последнее обновление: '+new Date().toLocaleString('ru-RU');}catch(e){console.warn(e);liveStatus('не удалось обновить — локальная история сохранена');}finally{syncing=false;}}
+async function refreshFromLichess(force=false){if(syncing)return;syncing=true;try{const cache=+localStorage.getItem(LIVE_CFG.cacheKey+':time')||0;if(!force&&Date.now()-cache<LIVE_CFG.cacheTtlMs){liveStatus('данные недавно проверены');return;}liveStatus('загрузка истории Пикабу…');const metas=await getMetas();const enriched=enrichStoredFromMetas(metas);if(enriched){for(const y of Object.keys(ALL_DATA).filter(y=>/^\d{4}$/.test(y))){for(const t of (ALL_DATA[y].tournaments||[])){await dbPut(t);}}}const known=new Set(Object.keys(ALL_DATA).filter(y=>/^\d{4}$/.test(y)).flatMap(y=>(ALL_DATA[y].tournaments||[]).map(t=>t.id)));const latest=new Set(metas.slice(0,LIVE_CFG.refreshLatest).map(m=>m.id));const targets=metas.filter(m=>{const ymeta=new Date(m.startsAt||m.createdAt||0).getFullYear();if(ymeta!==2025&&ymeta!==2026)return false;const metaDate=dateParts(m.startsAt||m.createdAt).date;if(EXCLUDED_DATES.has(metaDate))return false;const y=String((ALL_DATA.all?.tournaments||[]).find(t=>t.id===m.id)?.date||m.startsAt||m.createdAt||'').slice(0,4);const old=(ALL_DATA[y]?.tournaments||[]).find(t=>t.id===m.id);const needsRepair=!!old&&(!old.players||old.players.length===0||!old.timeControl||!old.league||old.teamPlayerCount===0||normalizeLeague(old.league,old.name)!==old.league||old.teamRank==null);return EXTRA_TOURNAMENT_IDS.includes(m.id)||!known.has(m.id)||latest.has(m.id)||needsRepair;});let n=0;for(const m of targets){liveStatus('синхронизация '+(++n)+' / '+targets.length+' · '+(m.name||m.id));if(EXTRA_TOURNAMENT_IDS.includes(m.id))await syncExtraTournament(m.id);else await syncOne(m);if(n%5===0){rebuildAll();renderAll();}await sleep(120);}for(const id of EXTRA_TOURNAMENT_IDS){const present=(ALL_DATA.all?.tournaments||[]).some(t=>t.id===id);if(!present){liveStatus('повторная загрузка ручного ID · '+id);await syncExtraTournament(id);}}rebuildAll();renderAll();localStorage.setItem(LIVE_CFG.cacheKey+':time',Date.now());const count=ALL_DATA.all.tournaments.length;liveStatus('обновлено · турниров: '+count+' · автообновление через 5 минут · '+new Date().toLocaleTimeString('ru-RU'));document.getElementById('footerInfo').textContent='Накопительная база: IndexedDB · турниров: '+count+' · автообновление: каждые 5 минут · последнее обновление: '+new Date().toLocaleString('ru-RU');}catch(e){console.warn(e);liveStatus('не удалось обновить — локальная история сохранена');}finally{syncing=false;}}
 function manualRefresh(){const b=document.getElementById('refreshBtn');if(b)b.disabled=true;refreshFromLichess(true).finally(()=>{if(b)b.disabled=false;});}
 async function fullHistorySync(){const b=document.getElementById('fullSyncBtn');if(b)b.disabled=true;try{localStorage.removeItem(LIVE_CFG.cacheKey+':time');await refreshFromLichess(true);}finally{if(b)b.disabled=false;}}
 async function saveUpdatedHtml(){
@@ -761,7 +825,7 @@ async function saveUpdatedHtml(){
   }catch(e){console.error(e);liveStatus('не удалось сохранить обновлённый файл');}
   finally{if(b)b.disabled=false;}
 }
-async function bootLive(){await loadDB();}
+async function bootLive(){try{await loadDB();liveStatus('первичная синхронизация…');await refreshFromLichess(true);liveStatus('автообновление · каждые 5 минут');}catch(e){console.warn(e);liveStatus('локальные данные · повторная проверка через 5 минут');}setInterval(()=>{refreshFromLichess(true);},LIVE_CFG.refreshMs);}
 window.addEventListener('DOMContentLoaded',bootLive);
 </script>
 
@@ -774,4 +838,19 @@ window.addEventListener('DOMContentLoaded',bootLive);
 </style>
 </body>
 </html>
-<style>.excluded-note,.exclude-note{display:none!important;}</style>
+<style>.excluded-note,.exclude-note{display:none!important;}
+/* AUTO UPDATE + MOBILE HEADER */
+.ysel{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;}
+.ysel #refreshBtn{padding:8px 14px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text);cursor:pointer;font:inherit;}
+.ysel #refreshBtn:hover{border-color:var(--accent);background:var(--hover);}
+@media(max-width:600px){
+  .header{padding:18px 10px 16px;}
+  .header h1{font-size:21px;line-height:1.2;}
+  .header .sub{font-size:12px;line-height:1.35;}
+  .header .note{font-size:11px;line-height:1.35;}
+  .ysel{display:grid;grid-template-columns:1fr;max-width:340px;width:100%;margin:0 auto;gap:8px;}
+  .ysel #refreshBtn{width:100%;margin:0;}
+  .ysel label{font-size:12px;color:var(--dim);text-align:left;}
+  .ysel select{width:100%;min-width:0;box-sizing:border-box;padding:9px 12px;font-size:14px;}
+}
+</style>
