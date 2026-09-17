@@ -368,6 +368,86 @@ tbody tr:nth-child(even){background:rgba(255,220,170,.018);}
   .titem .tnm { font-size:9px; }
 }
 </style>
+
+<style>
+/* ===== Correct mobile tables + date display ===== */
+@media (max-width: 600px){
+  .sw:has(#mainTable),
+  .sw:has(#fullTable),
+  .sw:has(#podiumTable),
+  .sw:has(#bestTable){
+    overflow-x:auto !important;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    width:100%;
+    max-width:100%;
+  }
+
+  #mainTable,
+  #fullTable{
+    width:max-content !important;
+    min-width:860px !important;
+    table-layout:auto !important;
+    font-size:10px !important;
+  }
+
+  #mainTable th,
+  #mainTable td,
+  #fullTable th,
+  #fullTable td{
+    white-space:nowrap !important;
+    padding:6px 5px !important;
+  }
+
+  #mainTable thead th.score-head,
+  #fullTable thead th.score-head{
+    white-space:normal !important;
+    min-width:118px !important;
+    width:118px !important;
+    line-height:1.15 !important;
+    text-align:center;
+  }
+
+  #mainTable thead th.score-head .th-title,
+  #fullTable thead th.score-head .th-title{
+    display:block !important;
+    font-size:11px !important;
+    line-height:1.1 !important;
+  }
+
+  #mainTable thead th.score-head .th-speed,
+  #fullTable thead th.score-head .th-speed{
+    display:block !important;
+    margin-top:3px !important;
+    font-size:10px !important;
+    color:var(--accent) !important;
+    line-height:1.1 !important;
+  }
+
+  #mainTable th:first-child,#mainTable td:first-child,
+  #fullTable th:first-child,#fullTable td:first-child{min-width:34px !important;width:34px !important;}
+  #mainTable th:nth-child(2),#mainTable td:nth-child(2),
+  #fullTable th:nth-child(2),#fullTable td:nth-child(2){min-width:105px !important;width:105px !important;}
+
+  /* Four score columns: Blitz (2) + Rapid (2) */
+  #mainTable th:nth-child(3),#mainTable td:nth-child(3),
+  #mainTable th:nth-child(4),#mainTable td:nth-child(4),
+  #mainTable th:nth-child(5),#mainTable td:nth-child(5),
+  #mainTable th:nth-child(6),#mainTable td:nth-child(6),
+  #fullTable th:nth-child(3),#fullTable td:nth-child(3),
+  #fullTable th:nth-child(4),#fullTable td:nth-child(4),
+  #fullTable th:nth-child(5),#fullTable td:nth-child(5),
+  #fullTable th:nth-child(6),#fullTable td:nth-child(6){
+    min-width:118px !important;
+    width:118px !important;
+  }
+
+  #mainTable th:nth-child(n+7),#mainTable td:nth-child(n+7),
+  #fullTable th:nth-child(n+7),#fullTable td:nth-child(n+7){
+    min-width:58px !important;
+  }
+}
+</style>
 </head>
 <body>
 <div class="header">
@@ -603,7 +683,12 @@ function renderMain(){renderPlayerTable('mainTable',D().mainData,true,D());}
 function renderFull(){renderPlayerTable('fullTable',D().allData,true,D());}
 function renderPodium(){const d=D(),t=document.getElementById('podiumTable'),pd=d.allData.filter(p=>p.gold+p.silver+p.bronze>0);t.querySelector('thead').innerHTML='<tr>'+th('#')+th('Игрок',null,'left')+th('🥇')+th('🥈')+th('🥉')+th('Всего')+'</tr>';const tb=t.querySelector('tbody');tb.innerHTML='';pd.forEach((p,i)=>tb.appendChild(el('tr','', '<td>'+(i+1)+'</td><td class="left"><strong>'+p.username+'</strong></td><td class="mg">'+p.gold+'</td><td class="ms">'+p.silver+'</td><td class="mb">'+p.bronze+'</td><td><strong>'+(p.gold+p.silver+p.bronze)+'</strong></td>')));bindSort('podiumTable');}
 function renderBest(){const d=D(),t=document.getElementById('bestTable'),bd=d.allData.filter(p=>p.team_best>0).sort((a,b)=>b.team_best-a.team_best);t.querySelector('thead').innerHTML='<tr>'+th('#')+th('Игрок',null,'left')+th('Раз лучший')+'</tr>';const tb=t.querySelector('tbody');tb.innerHTML='';bd.forEach((p,i)=>tb.appendChild(el('tr','', '<td>'+(i+1)+'</td><td class="left"><strong>'+p.username+'</strong></td><td><strong>'+p.team_best+'</strong></td>')));bindSort('bestTable');}
-function renderTours(){const d=D(),l=document.getElementById('tlist');l.innerHTML='';const tournaments=[...(d.tournaments||[])].sort((a,b)=>{const ad=String(a.date||'').replace(/\./g,'-');const bd=String(b.date||'').replace(/\./g,'-');return bd.localeCompare(ad)||String(b.id||'').localeCompare(String(a.id||''));});tournaments.forEach((t,idx)=>{const sp=classifySpeed(t.timeControl,t.speed);const lg=normalizeLeague(t.league,t.name)||extractLeague(t.name)||'—';const rankText=t.teamRank?(+t.teamRank===1?'🥇 Пикабу #1':+t.teamRank===2?'🥈 Пикабу #2':+t.teamRank===3?'🥉 Пикабу #3':'Пикабу #'+t.teamRank):'Пикабу';const it=el('div','titem','<span class="date">'+(t.date||'')+'</span><span class="wd">'+(t.weekday||'')+'</span><span class="tc"><strong>'+(t.timeControl||'—')+'</strong></span><span class="tc">'+speedLabel(sp)+'</span>'+lb(lg)+'<span class="cnt">'+(t.teamPlayerCount||0)+' из '+(t.originalPlayerCount||0)+'</span><span class="tr">🏳️ Пикабу · '+rankText.replace('Пикабу ','')+'</span><span class="tnm">'+(t.name||'')+'</span><span class="exp">▶</span>');it.onclick=()=>toggleTour(idx,it);l.appendChild(it);const det=el('div','tdet');det.id='tdet-'+idx;l.appendChild(det);});}
+function formatDisplayDate(v){
+  const s=String(v||'').replace(/-/g,'.');
+  const m=s.match(/^(\d{4})\.(\d{2})\.(\d{2})$/);
+  return m ? m[3]+'.'+m[2]+'.'+m[1] : s;
+}
+function renderTours(){const d=D(),l=document.getElementById('tlist');l.innerHTML='';const tournaments=[...(d.tournaments||[])].sort((a,b)=>{const ad=String(a.date||'').replace(/\./g,'-');const bd=String(b.date||'').replace(/\./g,'-');return bd.localeCompare(ad)||String(b.id||'').localeCompare(String(a.id||''));});tournaments.forEach((t,idx)=>{const sp=classifySpeed(t.timeControl,t.speed);const lg=normalizeLeague(t.league,t.name)||extractLeague(t.name)||'—';const rankText=t.teamRank?(+t.teamRank===1?'🥇 Пикабу #1':+t.teamRank===2?'🥈 Пикабу #2':+t.teamRank===3?'🥉 Пикабу #3':'Пикабу #'+t.teamRank):'Пикабу';const it=el('div','titem','<span class="date">'+formatDisplayDate(t.date)+'</span><span class="wd">'+(t.weekday||'')+'</span><span class="tc"><strong>'+(t.timeControl||'—')+'</strong></span><span class="tc">'+speedLabel(sp)+'</span>'+lb(lg)+'<span class="cnt">'+(t.teamPlayerCount||0)+' из '+(t.originalPlayerCount||0)+'</span><span class="tr">🏳️ Пикабу · '+rankText.replace('Пикабу ','')+'</span><span class="tnm">'+(t.name||'')+'</span><span class="exp">▶</span>');it.onclick=()=>toggleTour(idx,it);l.appendChild(it);const det=el('div','tdet');det.id='tdet-'+idx;l.appendChild(det);});}
 function toggleTour(idx,it){const det=document.getElementById('tdet-'+idx),open=det.classList.contains('open');document.querySelectorAll('.tdet.open').forEach(d=>d.classList.remove('open'));document.querySelectorAll('.titem.open').forEach(i=>i.classList.remove('open'));if(open)return;it.classList.add('open');det.classList.add('open');const t=D().tournaments[idx];let h='<div style="padding:10px 18px;color:var(--dim);font-size:12px">Контроль: <strong>'+t.timeControl+'</strong> · '+speedLabel(classifySpeed(t.timeControl,t.speed))+' · Лига: '+(t.league||'—')+' · Команда: '+(t.teamRank?'#'+t.teamRank:'—')+'</div><div class="sw"><table><thead><tr>'+th('В турн.')+th('Титул')+th('Игрок',null,'left')+th('Рейтинг')+th('Очки')+th('В команде')+'</tr></thead><tbody>';(t.players||[]).forEach(p=>{const r=+(p.Rank||p.rank)||0;h+='<tr><td class="'+rk(r)+'">'+(p.Rank??p.rank??'')+'</td><td>'+(p.Title||p.title||'')+'</td><td class="left"><strong>'+(p.Username||p.username||'')+'</strong></td><td>'+(p.Rating||p.rating||'')+'</td><td><strong>'+(p.Score??p.score??'')+'</strong></td><td>'+(p.TeamPosition||p.teamPosition||'')+'</td></tr>';});h+='</tbody></table></div>';det.innerHTML=h;}
 function renderVisuals(){const d=D();const g=d.allData.reduce((s,p)=>s+(p.gold||0),0),si=d.allData.reduce((s,p)=>s+(p.silver||0),0),b=d.allData.reduce((s,p)=>s+(p.bronze||0),0),total=g+si+b;document.getElementById("chartGold").textContent=g;document.getElementById("chartSilver").textContent=si;document.getElementById("chartBronze").textContent=b;document.getElementById("chartTotalPrize").textContent=total;document.getElementById("chartPrizePct").textContent=d.tournaments.length?Math.round(total/d.tournaments.length*100)+"%":"0%";document.getElementById("chartFormats").textContent=allControls(d).map(tc=>formatLabel(tc,classifySpeed(tc))).join("\n");}
 function renderDiagnostic(){const all=(ALL_DATA.all?.tournaments||[]);const ids=all.map(t=>String(t.id||''));const unique=new Set(ids);const dup=Math.max(0,ids.length-unique.size);const found=EXTRA_TOURNAMENT_IDS.filter(id=>unique.has(id));const missing=EXTRA_TOURNAMENT_IDS.filter(id=>!unique.has(id));const excludedCount=(Object.keys(ALL_DATA).filter(y=>/^\d{4}$/.test(y)).flatMap(y=>ALL_DATA[y].tournaments||[])).filter(t=>isExcludedTournament(t)).length;document.getElementById('diagTotal').textContent=all.length;document.getElementById('diagUnique').textContent=unique.size;document.getElementById('diagDuplicates').textContent=dup;document.getElementById('diagExpected').textContent=EXTRA_TOURNAMENT_IDS.length;document.getElementById('diagFound').textContent=found.length;document.getElementById('diagExcluded').textContent=excludedCount;const e=document.getElementById('diagMissing');e.innerHTML=missing.length?'Не найдены ручные ID: <strong>'+missing.join(', ')+'</strong>':'Все ручные ID найдены в текущей базе.';}
