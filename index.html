@@ -921,12 +921,38 @@ window.addEventListener('DOMContentLoaded',bootLive);
   #leagueTable th:nth-child(5),#leagueTable td:nth-child(5){width:12%;}
   #leagueTable th:nth-child(6),#leagueTable td:nth-child(6){width:18%;}
 
-  /* Tournament details table */
-  .tdet table{
-    min-width:470px !important;
-    font-size:10px !important;
+  /* Tournament details: fit the full table inside the phone screen */
+  .tdet{
+    overflow-x:hidden !important;
+    width:100% !important;
+    box-sizing:border-box;
   }
-  .tdet table th,.tdet table td{padding:5px 4px !important;}
+  .tdet .sw{
+    overflow-x:hidden !important;
+    width:100% !important;
+    max-width:100% !important;
+    -webkit-overflow-scrolling:auto;
+  }
+  .tdet table{
+    min-width:0 !important;
+    width:100% !important;
+    max-width:100% !important;
+    table-layout:fixed !important;
+    font-size:9px !important;
+  }
+  .tdet table th,.tdet table td{
+    padding:4px 2px !important;
+    white-space:normal !important;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+    line-height:1.15;
+  }
+  .tdet table th:nth-child(1),.tdet table td:nth-child(1){width:10%;}
+  .tdet table th:nth-child(2),.tdet table td:nth-child(2){width:9%;}
+  .tdet table th:nth-child(3),.tdet table td:nth-child(3){width:35%;}
+  .tdet table th:nth-child(4),.tdet table td:nth-child(4){width:14%;}
+  .tdet table th:nth-child(5),.tdet table td:nth-child(5){width:13%;}
+  .tdet table th:nth-child(6),.tdet table td:nth-child(6){width:19%;}
 }
 </style>
 </html>
