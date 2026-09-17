@@ -837,6 +837,98 @@ window.addEventListener('DOMContentLoaded',bootLive);
 @media(max-width:600px){.diag-grid{grid-template-columns:repeat(2,minmax(110px,1fr))}}
 </style>
 </body>
+
+<style>
+/* ===== COMPACT MOBILE TABLES / LEAGUES ===== */
+@media (max-width: 600px){
+  /* Player/stat tables: reduce horizontal travel */
+  .sw:has(#mainTable),
+  .sw:has(#fullTable),
+  .sw:has(#podiumTable),
+  .sw:has(#bestTable){
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  #mainTable,
+  #fullTable{
+    min-width:560px !important;
+    width:560px !important;
+    font-size:10px !important;
+    table-layout:fixed;
+  }
+  #mainTable th,
+  #mainTable td,
+  #fullTable th,
+  #fullTable td{
+    padding:5px 3px !important;
+    white-space:nowrap;
+  }
+  #mainTable th:first-child,
+  #mainTable td:first-child,
+  #fullTable th:first-child,
+  #fullTable td:first-child{width:28px;}
+  #mainTable th:nth-child(2),
+  #mainTable td:nth-child(2),
+  #fullTable th:nth-child(2),
+  #fullTable td:nth-child(2){width:105px;overflow:hidden;text-overflow:ellipsis;}
+  #mainTable th:nth-child(n+3):nth-child(-n+6),
+  #mainTable td:nth-child(n+3):nth-child(-n+6),
+  #fullTable th:nth-child(n+3):nth-child(-n+6),
+  #fullTable td:nth-child(n+3):nth-child(-n+6){width:58px;}
+  #mainTable th:nth-child(n+7),
+  #mainTable td:nth-child(n+7),
+  #fullTable th:nth-child(n+7),
+  #fullTable td:nth-child(n+7){width:48px;}
+
+  #podiumTable{
+    min-width:100% !important;
+    width:100% !important;
+    font-size:10px !important;
+  }
+  #podiumTable th,#podiumTable td{padding:6px 4px !important;}
+  #podiumTable th:nth-child(1),#podiumTable td:nth-child(1){width:28px;}
+
+  #bestTable{
+    min-width:100% !important;
+    width:100% !important;
+    font-size:10px !important;
+  }
+  #bestTable th,#bestTable td{padding:6px 4px !important;}
+  #bestTable th:nth-child(1),#bestTable td:nth-child(1){width:28px;}
+  #bestTable th:nth-child(3),#bestTable td:nth-child(3){width:58px;}
+
+  /* League list: use the whole phone width and show all rows vertically */
+  .sw:has(#leagueTable){
+    overflow-x:hidden !important;
+    overflow-y:visible !important;
+    max-height:none !important;
+  }
+  #leagueTable{
+    min-width:100% !important;
+    width:100% !important;
+    table-layout:fixed;
+    font-size:11px !important;
+  }
+  #leagueTable th,
+  #leagueTable td{
+    padding:7px 5px !important;
+    white-space:nowrap;
+  }
+  #leagueTable th:nth-child(1),#leagueTable td:nth-child(1){width:27%;}
+  #leagueTable th:nth-child(2),#leagueTable td:nth-child(2){width:19%;}
+  #leagueTable th:nth-child(3),#leagueTable td:nth-child(3),
+  #leagueTable th:nth-child(4),#leagueTable td:nth-child(4),
+  #leagueTable th:nth-child(5),#leagueTable td:nth-child(5){width:12%;}
+  #leagueTable th:nth-child(6),#leagueTable td:nth-child(6){width:18%;}
+
+  /* Tournament details table */
+  .tdet table{
+    min-width:470px !important;
+    font-size:10px !important;
+  }
+  .tdet table th,.tdet table td{padding:5px 4px !important;}
+}
+</style>
 </html>
 <style>.excluded-note,.exclude-note{display:none!important;}
 /* AUTO UPDATE + MOBILE HEADER */
