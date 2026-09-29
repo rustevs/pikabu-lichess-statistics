@@ -2009,4 +2009,111 @@ window.addEventListener('DOMContentLoaded',function(){
 }
 </style>
 
+
+<style>
+/* MOBILE-FIX6: on phones, keep the 44-prize circle on top; put
+   prize-share circle on the left and Formats directly to its right. */
+@media (max-width:600px){
+  .visuals{
+    display:grid !important;
+    grid-template-columns:126px minmax(0,1fr) !important;
+    column-gap:14px !important;
+    row-gap:12px !important;
+    align-items:start !important;
+  }
+
+  .visuals > .visual-card:first-child{
+    grid-column:1 / -1 !important;
+    grid-row:1 !important;
+    width:100% !important;
+  }
+
+  /* Flatten the wrapper so its two mini-blocks can occupy two columns. */
+  .visuals > .combined-visual{
+    display:contents !important;
+  }
+
+  .combined-visual .mini-visual:first-child{
+    grid-column:1 !important;
+    grid-row:2 !important;
+    width:126px !important;
+    min-width:126px !important;
+    justify-self:start !important;
+    align-self:start !important;
+  }
+
+  .combined-visual .mini-visual:first-child .visual-title{
+    width:126px !important;
+    font-size:16px !important;
+    line-height:1.2 !important;
+    margin-bottom:8px !important;
+    text-align:center !important;
+    justify-content:center !important;
+    white-space:normal !important;
+  }
+
+  .combined-visual .mini-visual:first-child .progress-wrap,
+  .combined-visual .mini-visual:first-child .progress{
+    width:126px !important;
+    height:126px !important;
+    min-width:126px !important;
+    min-height:126px !important;
+    margin:0 !important;
+  }
+
+  .combined-visual .mini-visual:first-child .progress-text{
+    width:126px !important;
+    height:126px !important;
+    left:0 !important;
+    top:0 !important;
+    padding:0 8px !important;
+    box-sizing:border-box !important;
+    overflow:hidden !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    text-align:center !important;
+  }
+
+  /* Formats is the second mini-block, immediately to the right. */
+  .combined-visual .mini-visual:nth-child(2){
+    grid-column:2 !important;
+    grid-row:2 !important;
+    width:100% !important;
+    min-width:0 !important;
+    height:126px !important;
+    min-height:126px !important;
+    margin:0 !important;
+    padding:0 !important;
+    align-self:start !important;
+    justify-self:stretch !important;
+    align-items:center !important;
+    overflow:hidden !important;
+  }
+
+  .combined-visual .mini-visual:nth-child(2) .visual-title{
+    width:100% !important;
+    margin:0 0 8px !important;
+    font-size:16px !important;
+    line-height:1.2 !important;
+    justify-content:center !important;
+    text-align:center !important;
+    white-space:normal !important;
+  }
+
+  .combined-visual .mini-visual:nth-child(2) #chartFormats{
+    display:block !important;
+    width:100% !important;
+    height:90px !important;
+    max-height:90px !important;
+    margin:0 !important;
+    padding:0 !important;
+    overflow:hidden !important;
+    text-align:center !important;
+    white-space:pre-line !important;
+    line-height:1.45 !important;
+  }
+}
+</style>
+
 </body></html>
