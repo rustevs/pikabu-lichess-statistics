@@ -2116,4 +2116,129 @@ window.addEventListener('DOMContentLoaded',function(){
 }
 </style>
 
+
+<style>
+/* MOBILE-FIX7: align the two circles to the same x-position and keep
+   the complete, dynamic Formats list visible on the right. */
+@media (max-width:600px){
+  /* The first visual card has 18px inner padding. Start its donut there. */
+  .visuals > .visual-card:first-child .visual-body{
+    width:126px !important;
+    min-width:126px !important;
+    height:auto !important;
+    min-height:0 !important;
+    padding:0 !important;
+    margin-left:0 !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:flex-start !important;
+    justify-content:flex-start !important;
+    gap:10px !important;
+  }
+
+  .visuals > .visual-card:first-child .visual-body .donut{
+    width:126px !important;
+    height:126px !important;
+    min-width:126px !important;
+    min-height:126px !important;
+    flex:0 0 126px !important;
+    margin:0 !important;
+  }
+
+  /* The combined block starts in the same content area as the first card. */
+  .visuals > .combined-visual{
+    display:contents !important;
+  }
+
+  .combined-visual .mini-visual:first-child{
+    grid-column:1 !important;
+    grid-row:2 !important;
+    width:126px !important;
+    min-width:126px !important;
+    margin-left:18px !important;
+    justify-self:start !important;
+    align-self:start !important;
+  }
+
+  .combined-visual .mini-visual:first-child .visual-title{
+    width:126px !important;
+    margin:0 0 8px !important;
+    font-size:16px !important;
+    line-height:1.2 !important;
+    text-align:center !important;
+    justify-content:center !important;
+    white-space:normal !important;
+  }
+
+  .combined-visual .mini-visual:first-child .progress-wrap,
+  .combined-visual .mini-visual:first-child .progress{
+    width:126px !important;
+    height:126px !important;
+    min-width:126px !important;
+    min-height:126px !important;
+    margin:0 !important;
+  }
+
+  .combined-visual .mini-visual:first-child .progress-text{
+    width:126px !important;
+    height:126px !important;
+    left:0 !important;
+    top:0 !important;
+    padding:0 8px !important;
+    box-sizing:border-box !important;
+    overflow:hidden !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    text-align:center !important;
+    line-height:1.1 !important;
+  }
+
+  /* Formats stays in the right column, with its complete six-line list. */
+  .combined-visual .mini-visual:nth-child(2){
+    grid-column:2 !important;
+    grid-row:2 !important;
+    width:100% !important;
+    min-width:0 !important;
+    height:150px !important;
+    min-height:150px !important;
+    margin:0 !important;
+    padding:0 !important;
+    align-self:start !important;
+    justify-self:stretch !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    overflow:visible !important;
+  }
+
+  .combined-visual .mini-visual:nth-child(2) .visual-title{
+    display:flex !important;
+    width:100% !important;
+    margin:0 0 7px !important;
+    font-size:16px !important;
+    line-height:1.2 !important;
+    justify-content:center !important;
+    text-align:center !important;
+    white-space:normal !important;
+    visibility:visible !important;
+  }
+
+  .combined-visual .mini-visual:nth-child(2) #chartFormats{
+    display:block !important;
+    width:100% !important;
+    height:auto !important;
+    max-height:none !important;
+    margin:0 !important;
+    padding:0 !important;
+    overflow:visible !important;
+    text-align:center !important;
+    white-space:pre-line !important;
+    font-size:13px !important;
+    line-height:1.25 !important;
+    font-weight:700 !important;
+  }
+}
+</style>
+
 </body></html>
