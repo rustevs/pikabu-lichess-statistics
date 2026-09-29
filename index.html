@@ -2241,4 +2241,154 @@ window.addEventListener('DOMContentLoaded',function(){
 }
 </style>
 
+
+<style>
+/* MOBILE-FIX8 */
+@media (max-width:600px){
+  /* Prize distribution: circle on the left, all labels on the right. */
+  .visuals > .visual-card:first-child .visual-body{
+    width:100% !important;
+    min-width:0 !important;
+    height:126px !important;
+    min-height:126px !important;
+    padding:0 !important;
+    margin:0 !important;
+    display:grid !important;
+    grid-template-columns:126px minmax(0,1fr) !important;
+    column-gap:14px !important;
+    align-items:center !important;
+    justify-content:initial !important;
+  }
+  .visuals > .visual-card:first-child .visual-body .donut{
+    grid-column:1 !important;
+    grid-row:1 !important;
+    width:126px !important;
+    height:126px !important;
+    min-width:126px !important;
+    min-height:126px !important;
+    margin:0 !important;
+  }
+  .visuals > .visual-card:first-child .visual-body .legend{
+    grid-column:2 !important;
+    grid-row:1 !important;
+    width:auto !important;
+    min-width:0 !important;
+    margin:0 !important;
+    padding:0 !important;
+    transform:none !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:flex-start !important;
+    justify-content:center !important;
+    gap:5px !important;
+    overflow:visible !important;
+  }
+  .visuals > .visual-card:first-child .visual-body .legend span{
+    white-space:normal !important;
+    font-size:12px !important;
+    line-height:1.15 !important;
+    max-width:100% !important;
+  }
+  .visuals > .visual-card:first-child .visual-body .legend .mini-note{
+    font-size:10px !important;
+    line-height:1.2 !important;
+    white-space:normal !important;
+    margin-top:1px !important;
+  }
+
+  /* Keep the share heading on one line while the circle stays aligned with the first one. */
+  .combined-visual .mini-visual:first-child{
+    grid-column:1 !important;
+    grid-row:2 !important;
+    width:180px !important;
+    min-width:180px !important;
+    margin-left:18px !important;
+    justify-self:start !important;
+    align-self:start !important;
+  }
+  .combined-visual .mini-visual:first-child .visual-title{
+    width:180px !important;
+    margin:0 0 8px !important;
+    font-size:16px !important;
+    line-height:1.15 !important;
+    white-space:nowrap !important;
+    overflow:visible !important;
+    text-align:left !important;
+    justify-content:flex-start !important;
+  }
+  .combined-visual .mini-visual:first-child .progress-wrap{
+    width:126px !important;
+    height:126px !important;
+    min-width:126px !important;
+    min-height:126px !important;
+    margin:0 !important;
+    position:relative !important;
+    justify-content:flex-start !important;
+  }
+  .combined-visual .mini-visual:first-child .progress{
+    width:126px !important;
+    height:126px !important;
+    min-width:126px !important;
+    min-height:126px !important;
+    margin:0 !important;
+  }
+  .combined-visual .mini-visual:first-child .progress-text{
+    width:126px !important;
+    height:126px !important;
+    left:0 !important;
+    top:0 !important;
+    padding:0 8px !important;
+    box-sizing:border-box !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    text-align:center !important;
+    line-height:1.1 !important;
+  }
+
+  /* Formats: larger type and line spacing; last line ends near the bottom of the 38% circle. */
+  .combined-visual .mini-visual:nth-child(2){
+    grid-column:2 !important;
+    grid-row:2 !important;
+    width:100% !important;
+    min-width:0 !important;
+    height:126px !important;
+    min-height:126px !important;
+    margin:0 !important;
+    padding:0 !important;
+    align-self:start !important;
+    justify-self:stretch !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:flex-start !important;
+    overflow:visible !important;
+  }
+  .combined-visual .mini-visual:nth-child(2) .visual-title{
+    display:flex !important;
+    width:100% !important;
+    margin:0 0 6px !important;
+    font-size:16px !important;
+    line-height:1.15 !important;
+    justify-content:flex-start !important;
+    text-align:left !important;
+    white-space:nowrap !important;
+    visibility:visible !important;
+  }
+  .combined-visual .mini-visual:nth-child(2) #chartFormats{
+    display:block !important;
+    width:100% !important;
+    height:100px !important;
+    max-height:100px !important;
+    margin:0 !important;
+    padding:0 !important;
+    overflow:hidden !important;
+    text-align:left !important;
+    white-space:pre-line !important;
+    font-size:14px !important;
+    line-height:1.42 !important;
+    font-weight:700 !important;
+  }
+}
+</style>
+
 </body></html>
