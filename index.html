@@ -2446,4 +2446,52 @@ window.addEventListener('DOMContentLoaded',function(){
 }
 </style>
 
+
+<style>
+/* MOBILE-FIX10 */
+@media (max-width:600px){
+  /* Separate the two lower mini-blocks more clearly. */
+  .visuals{
+    grid-template-columns:158px minmax(0,1fr) !important;
+    column-gap:18px !important;
+  }
+
+  .combined-visual .mini-visual:first-child{
+    grid-column:1 !important;
+    width:126px !important;
+    min-width:126px !important;
+    margin-left:18px !important;
+  }
+
+  .combined-visual .mini-visual:nth-child(2){
+    grid-column:2 !important;
+    width:100% !important;
+    min-width:0 !important;
+    margin-left:8px !important;
+    overflow:visible !important;
+    justify-self:stretch !important;
+  }
+
+  .combined-visual .mini-visual:nth-child(2) .visual-title{
+    width:max-content !important;
+    max-width:none !important;
+    font-size:16px !important;
+    line-height:1.15 !important;
+    white-space:nowrap !important;
+    overflow:visible !important;
+    margin-bottom:6px !important;
+  }
+
+  /* Lift only the word "призовых" inside the 44-circle. */
+  #chartTotalPrize{
+    position:relative !important;
+    top:-2px !important;
+  }
+  #chartTotalPrize + span{
+    position:relative !important;
+    top:-5px !important;
+  }
+}
+</style>
+
 </body></html>
