@@ -1856,4 +1856,49 @@ window.addEventListener('DOMContentLoaded',function(){
 }
 </style>
 
+
+<style>
+/* MOBILE-FIX4: center the percentage inside its circle and place format lines under the heading. */
+@media (max-width:600px){
+  .combined-visual .mini-visual:first-child .progress-wrap{
+    position:relative !important;
+    width:126px !important;
+    height:126px !important;
+    min-width:126px !important;
+    min-height:126px !important;
+    margin:0 auto !important;
+  }
+  .combined-visual .mini-visual:first-child .progress-text{
+    position:absolute !important;
+    left:0 !important;
+    top:0 !important;
+    width:126px !important;
+    height:126px !important;
+    margin:0 !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    text-align:center !important;
+    box-sizing:border-box !important;
+  }
+
+  .combined-visual .mini-visual:nth-child(2){
+    align-items:stretch !important;
+  }
+  .combined-visual .mini-visual:nth-child(2) .visual-title{
+    width:100% !important;
+    justify-content:center !important;
+    text-align:center !important;
+  }
+  .combined-visual .mini-visual:nth-child(2) #chartFormats{
+    display:block !important;
+    width:100% !important;
+    margin:0 !important;
+    text-align:center !important;
+    white-space:pre-line !important;
+    line-height:1.45 !important;
+  }
+}
+</style>
+
 </body></html>
