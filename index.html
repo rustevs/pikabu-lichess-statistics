@@ -2679,4 +2679,45 @@ window.addEventListener('DOMContentLoaded',function(){
 }
 </style>
 
+
+<style>
+/* MOBILE-FIX15 */
+@media (max-width:600px){
+  /* Do not let the left title be clipped. Visually compress only its
+     horizontal width so the full word "турниров" is visible. */
+  .combined-visual .mini-visual:first-child .visual-title{
+    display:block !important;
+    width:max-content !important;
+    max-width:none !important;
+    white-space:nowrap !important;
+    overflow:visible !important;
+    transform:scaleX(.84) !important;
+    transform-origin:left center !important;
+  }
+
+  /* Put Formats clearly to the right of the left mini-block. */
+  .combined-visual .mini-visual:nth-child(2){
+    position:relative !important;
+    left:42px !important;
+    z-index:5 !important;
+    width:155px !important;
+    min-width:155px !important;
+    overflow:visible !important;
+  }
+
+  .combined-visual .mini-visual:nth-child(2) .visual-title,
+  .combined-visual .mini-visual:nth-child(2) #chartFormats{
+    position:relative !important;
+    left:0 !important;
+    overflow:visible !important;
+  }
+
+  /* Make sure the parent does not clip the moved block. */
+  .combined-visual{
+    overflow:visible !important;
+    padding-right:0 !important;
+  }
+}
+</style>
+
 </body></html>
