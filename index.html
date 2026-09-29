@@ -1901,4 +1901,112 @@ window.addEventListener('DOMContentLoaded',function(){
 }
 </style>
 
+
+<style>
+/* MOBILE-FIX5 */
+@media (max-width:600px){
+  /* Left column: both circles use the same 126px column and stay aligned. */
+  .combined-visual{
+    grid-template-columns:126px minmax(0,1fr) !important;
+    grid-template-rows:126px 126px !important;
+    column-gap:14px !important;
+    row-gap:12px !important;
+    align-items:start !important;
+  }
+
+  .combined-visual .mini-visual{
+    width:126px !important;
+    min-width:126px !important;
+    align-items:center !important;
+    justify-self:start !important;
+  }
+
+  /* Keep the circle itself fully inside its 126px box. */
+  .combined-visual .mini-visual:first-child .progress-wrap,
+  .combined-visual .mini-visual:first-child .progress{
+    width:126px !important;
+    height:126px !important;
+    min-width:126px !important;
+    min-height:126px !important;
+    margin:0 !important;
+  }
+
+  .combined-visual .mini-visual:first-child .progress-text{
+    width:126px !important;
+    height:126px !important;
+    left:0 !important;
+    top:0 !important;
+    padding:0 8px !important;
+    box-sizing:border-box !important;
+    overflow:hidden !important;
+    white-space:normal !important;
+    text-align:center !important;
+    line-height:1.15 !important;
+  }
+
+  /* Second circle sits directly under the first one. */
+  .combined-visual .mini-visual:nth-child(2){
+    width:126px !important;
+    min-width:126px !important;
+    grid-column:1 !important;
+    grid-row:2 !important;
+    align-self:start !important;
+    justify-self:start !important;
+  }
+
+  .combined-visual .mini-visual:nth-child(2) .visual-title{
+    display:none !important;
+  }
+
+  .combined-visual .mini-visual:nth-child(2) .visual-body{
+    width:126px !important;
+    height:126px !important;
+    min-height:126px !important;
+    margin:0 !important;
+    padding:0 !important;
+  }
+
+  .combined-visual .mini-visual:nth-child(2) .donut{
+    width:126px !important;
+    height:126px !important;
+    min-width:126px !important;
+    min-height:126px !important;
+    margin:0 !important;
+  }
+
+  /* Formats: right column, same vertical height as the second circle. */
+  .combined-visual .mini-visual:nth-child(3){
+    grid-column:2 !important;
+    grid-row:2 !important;
+    width:100% !important;
+    min-width:0 !important;
+    height:126px !important;
+    min-height:126px !important;
+    align-self:start !important;
+    justify-self:stretch !important;
+    align-items:center !important;
+    overflow:hidden !important;
+  }
+
+  .combined-visual .mini-visual:nth-child(3) .visual-title{
+    width:100% !important;
+    margin:0 0 8px !important;
+    justify-content:center !important;
+    text-align:center !important;
+  }
+
+  .combined-visual .mini-visual:nth-child(3) #chartFormats{
+    width:100% !important;
+    height:90px !important;
+    max-height:90px !important;
+    overflow:hidden !important;
+    margin:0 !important;
+    padding:0 !important;
+    text-align:center !important;
+    white-space:pre-line !important;
+    line-height:1.45 !important;
+  }
+}
+</style>
+
 </body></html>
