@@ -859,69 +859,55 @@ body.publication-version #publicationVersionLabel{display:inline!important;}
 </style>
 
 <style>
-/* ===== Mobile: exact vertical alignment of the two circular charts ===== */
+/* ===== Mobile FIX17: preserve original blocks, only align circles ===== */
 @media (max-width:768px){
-  #visuals{grid-template-columns:1fr !important;gap:10px !important;}
-  #visuals > .visual-card:first-child{
-    grid-column:1 !important;width:100% !important;box-sizing:border-box !important;
+  /* Do NOT collapse the whole visuals grid: the first chart stays full width,
+     Formats and Share remain in their original mobile positions. */
+  .visuals{
+    grid-template-columns:1fr 1fr !important;
+    gap:8px !important;
   }
+
+  /* Distribution of prize places = full mobile width. */
+  .visuals > .visual-card:first-child{
+    grid-column:1 / -1 !important;
+    width:100% !important;
+    box-sizing:border-box !important;
+  }
+
+  /* Keep the two small cards in their existing two-column area. */
   .combined-visual{
-    grid-column:1 !important;display:grid !important;
-    grid-template-columns:1fr !important;grid-template-rows:auto auto !important;
-    width:100% !important;box-sizing:border-box !important;
-    padding:12px !important;gap:12px !important;
+    grid-column:1 / -1 !important;
+    display:grid !important;
+    grid-template-columns:1fr 1fr !important;
+    gap:8px !important;
+    width:100% !important;
+    box-sizing:border-box !important;
   }
+
   .combined-visual .mini-visual{
-    width:100% !important;min-width:0 !important;
-    display:flex !important;flex-direction:column !important;
-    align-items:center !important;box-sizing:border-box !important;
+    min-width:0 !important;
+    width:100% !important;
+    box-sizing:border-box !important;
   }
-  #visuals .visual-title{
-    width:100% !important;justify-content:center !important;
-    text-align:center !important;white-space:normal !important;
-    margin-bottom:8px !important;
-  }
-  .visual-body{
-    width:100% !important;height:auto !important;min-height:0 !important;
-    padding:0 !important;margin:0 !important;
-    display:flex !important;flex-direction:column !important;
-    align-items:center !important;justify-content:flex-start !important;
-    gap:10px !important;
-  }
-  .visual-body .donut,
-  .combined-visual .progress{
-    width:126px !important;height:126px !important;
-    min-width:126px !important;min-height:126px !important;
-    flex:0 0 126px !important;
-    margin-left:auto !important;margin-right:auto !important;
-  }
+
+  /* Do not move text inside the second circle. */
   .combined-visual .progress-wrap{
-    position:relative !important;width:126px !important;height:126px !important;
-    min-width:126px !important;min-height:126px !important;
-    flex:0 0 126px !important;margin:0 auto !important;
-    display:flex !important;align-items:center !important;
-    justify-content:center !important;padding:0 !important;
-  }
-  .donut-center{
-    position:absolute !important;inset:0 !important;
-    width:100% !important;height:100% !important;
-    display:flex !important;align-items:center !important;
-    justify-content:center !important;text-align:center !important;
-    transform:none !important;margin:0 !important;
+    position:relative !important;
   }
   .combined-visual .progress-text{
-    position:absolute !important;left:50% !important;top:50% !important;
-    right:auto !important;bottom:auto !important;
+    position:absolute !important;
+    left:50% !important;
+    top:50% !important;
     transform:translate(-50%,-50%) !important;
-    width:max-content !important;margin:0 !important;text-align:center !important;
+    margin:0 !important;
+    text-align:center !important;
   }
-  .visual-body .legend{
-    width:100% !important;min-width:0 !important;
-    transform:none !important;display:flex !important;
-    align-items:center !important;text-align:center !important;
-  }
-  .visual-body .legend span{
-    justify-content:center !important;text-align:center !important;
+
+  /* Keep the donut itself centered inside its own visual area. */
+  .visual-body .donut{
+    margin-left:auto !important;
+    margin-right:auto !important;
   }
 }
 </style>
@@ -931,7 +917,7 @@ body.publication-version #publicationVersionLabel{display:inline!important;}
 <div class="header">
 <h1>Lichess — <span class="accent">Официальный клуб Пикабу</span></h1>
 <div class="sub">Командные турниры Bundesliga · Blitz + Rapid</div>
-<div class="note">Источник: официальный клуб Пикабу на Lichess · <span id="liveStatus">проверка новых турниров…</span><span id="publicationVersionLabel" style="display: inline; margin-left: 8px;">· Версия от <strong id="publicationVersionDate">03.10.2026</strong></span></div>
+<div class="note">Источник: официальный клуб Пикабу на Lichess · <span id="liveStatus">Локальные данные · обновление вручную</span><span id="publicationVersionLabel" style="display: inline; margin-left: 8px;">· Версия от <strong id="publicationVersionDate">03.10.2026</strong></span></div>
 <div class="ysel"><label for="yearSelect">Год:</label><select id="yearSelect" onchange="switchYear()"><option value="2026">2026</option><option value="2025">2025</option><option value="all">Все годы (2025–2026)</option></select></div>
 </div>
 <div class="container">
