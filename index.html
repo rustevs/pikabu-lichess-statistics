@@ -912,6 +912,60 @@ body.publication-version #publicationVersionLabel{display:inline!important;}
 }
 </style>
 
+
+<style id="mobile-fix18">
+/* MOBILE-FIX18: keep the two mini blocks side-by-side; center the percentage text and align its circle under the main prize donut. */
+@media (max-width:600px){
+  /* Keep the main prize card full width. */
+  #visuals > .visual-card:first-child{
+    grid-column:1 / -1 !important;
+    width:100% !important;
+  }
+
+  /* Keep Formats and Share of prize tournaments in their two-column row. */
+  #visuals > .combined-visual{
+    grid-column:1 / -1 !important;
+    display:grid !important;
+    grid-template-columns:1fr 1fr !important;
+    grid-template-rows:auto !important;
+    gap:8px !important;
+    width:100% !important;
+    padding:10px !important;
+    box-sizing:border-box !important;
+  }
+
+  /* The percentage text must stay exactly in the middle of its circle. */
+  #visuals > .combined-visual .mini-visual:first-child .progress-wrap{
+    position:relative !important;
+    width:126px !important;
+    height:126px !important;
+    margin:0 auto !important;
+  }
+  #visuals > .combined-visual .mini-visual:first-child .progress-text{
+    position:absolute !important;
+    inset:0 !important;
+    left:0 !important;
+    top:0 !important;
+    width:126px !important;
+    height:126px !important;
+    margin:0 !important;
+    transform:none !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    justify-content:center !important;
+    text-align:center !important;
+  }
+
+  /* Put the second circle on the same vertical axis as the main donut. */
+  #visuals > .combined-visual .mini-visual:first-child{
+    position:relative !important;
+  }
+  #visuals > .combined-visual .mini-visual:first-child .progress-wrap{
+    transform:translateX(-25%) !important;
+  }
+}
+</style>
 </head>
 <body class="publication-version">
 <div class="header">
