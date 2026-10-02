@@ -1116,15 +1116,126 @@ body.publication-version #publicationVersionLabel{display:inline!important;}
 }
 </style>
 
+
+<style id="player-stats-mobile-fit-fix24">
+/* MOBILE-FIX24: compact player card tables so almost all columns fit the phone width. */
+@media (max-width:600px){
+  .player-stats-overlay{
+    padding:4px !important;
+    align-items:center;
+  }
+  .player-stats-modal{
+    width:calc(100vw - 8px) !important;
+    max-width:calc(100vw - 8px) !important;
+    max-height:96vh !important;
+    border-radius:10px !important;
+  }
+  .player-stats-head{
+    padding:8px 9px !important;
+    gap:6px !important;
+  }
+  .player-stats-head h3{
+    font-size:15px !important;
+    line-height:1.2 !important;
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .player-stats-close{
+    flex:0 0 auto;
+    padding:4px 8px !important;
+    font-size:17px !important;
+  }
+  .player-stats-body{
+    padding:7px 7px 10px !important;
+  }
+  .player-stats-period{
+    font-size:10px !important;
+    margin-bottom:7px !important;
+  }
+  .player-stats-cards{
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    gap:4px !important;
+    margin-bottom:8px !important;
+  }
+  .player-stats-card{
+    padding:5px 2px !important;
+    border-radius:7px !important;
+  }
+  .player-stats-card strong{
+    font-size:14px !important;
+    line-height:1.1 !important;
+  }
+  .player-stats-card span{
+    font-size:8px !important;
+    line-height:1.1 !important;
+    margin-top:2px !important;
+  }
+  .player-stats-section-title{
+    font-size:11px !important;
+    margin:8px 0 4px !important;
+  }
+  .player-stats-table-wrap{
+    width:100% !important;
+    max-width:100% !important;
+    overflow:hidden !important;
+  }
+  .player-stats-table{
+    width:100% !important;
+    min-width:0 !important;
+    max-width:100% !important;
+    table-layout:fixed !important;
+    font-size:8.5px !important;
+    line-height:1.15 !important;
+  }
+  .player-stats-table th,
+  .player-stats-table td{
+    padding:3px 2px !important;
+    white-space:nowrap !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+  }
+  .player-stats-table th{
+    font-size:8px !important;
+    line-height:1.05 !important;
+    white-space:normal !important;
+    overflow:visible !important;
+    text-overflow:clip !important;
+    vertical-align:middle;
+  }
+  /* Blitz / Rapid comparison: keep all four columns visible. */
+  .player-stats-table:not(:has(+ *)){width:100% !important;}
+
+  /* Format table: Контроль / Тип / Турниров / Турнирные очки */
+  .player-stats-controls-table th:nth-child(1),.player-stats-controls-table td:nth-child(1){width:19%;}
+  .player-stats-controls-table th:nth-child(2),.player-stats-controls-table td:nth-child(2){width:20%;}
+  .player-stats-controls-table th:nth-child(3),.player-stats-controls-table td:nth-child(3){width:22%;}
+  .player-stats-controls-table th:nth-child(4),.player-stats-controls-table td:nth-child(4){width:39%;}
+
+  /* All tournaments: all 9 columns stay visible on a phone. */
+  .player-stats-all-table th:nth-child(1),.player-stats-all-table td:nth-child(1){width:13%;}
+  .player-stats-all-table th:nth-child(2),.player-stats-all-table td:nth-child(2){width:10%;}
+  .player-stats-all-table th:nth-child(3),.player-stats-all-table td:nth-child(3){width:12%;}
+  .player-stats-all-table th:nth-child(4),.player-stats-all-table td:nth-child(4){width:10%;}
+  .player-stats-all-table th:nth-child(5),.player-stats-all-table td:nth-child(5){width:10%;}
+  .player-stats-all-table th:nth-child(6),.player-stats-all-table td:nth-child(6){width:11%;}
+  .player-stats-all-table th:nth-child(7),.player-stats-all-table td:nth-child(7){width:9%;}
+  .player-stats-all-table th:nth-child(8),.player-stats-all-table td:nth-child(8){width:11%;}
+  .player-stats-all-table th:nth-child(9),.player-stats-all-table td:nth-child(9){width:14%;}
+
+  .player-stats-empty{font-size:10px !important;}
+</style>
+
 </head>
-<body style="" class="publication-version">
+<body class="publication-version">
 <div id="playerStatsOverlay" class="player-stats-overlay" aria-hidden="true">
   <div class="player-stats-modal" role="dialog" aria-modal="true" aria-labelledby="playerStatsTitle">
     <div class="player-stats-head">
-      <h3 id="playerStatsTitle">♟ rustevs</h3>
+      <h3 id="playerStatsTitle">Статистика игрока</h3>
       <button type="button" class="player-stats-close" onclick="closePlayerStats()" aria-label="Закрыть">×</button>
     </div>
-    <div id="playerStatsBody" class="player-stats-body"><div class="player-stats-period">Выбранный период: <strong>2026</strong></div><div class="player-stats-cards"><div class="player-stats-card"><strong>72</strong><span>Турниров</span></div><div class="player-stats-card"><strong>2482</strong><span>Турнирных очков</span></div><div class="player-stats-card"><strong>28</strong><span>Призовых мест</span></div><div class="player-stats-card"><strong>39%</strong><span>Призовых турниров</span></div><div class="player-stats-card"><strong>1</strong><span>Лучшее место</span></div></div><div class="player-stats-section-title">Blitz / Rapid</div><div class="player-stats-table-wrap"><table class="player-stats-table"><thead><tr><th>Показатель</th><th>Blitz</th><th>Rapid</th><th>Всего</th></tr></thead><tbody><tr><td class="left">Турниры</td><td>55</td><td>17</td><td>72</td></tr><tr><td class="left">Турнирные очки</td><td>2131</td><td>351</td><td>2482</td></tr><tr><td class="left">🥇 / 🥈 / 🥉</td><td>13 / 7 / 3</td><td>3 / 1 / 1</td><td>16 / 8 / 4</td></tr></tbody></table></div><div class="player-stats-section-title">По форматам</div><div class="player-stats-table-wrap"><table class="player-stats-table"><thead><tr><th>Контроль</th><th>Тип</th><th>Турниров</th><th>Турнирные очки</th></tr></thead><tbody><tr><td><strong>3+0</strong></td><td>Blitz</td><td>17</td><td>840</td></tr><tr><td><strong>3+2</strong></td><td>Blitz</td><td>18</td><td>488</td></tr><tr><td><strong>5+0</strong></td><td>Blitz</td><td>20</td><td>803</td></tr><tr><td><strong>10+0</strong></td><td>Rapid</td><td>6</td><td>155</td></tr><tr><td><strong>7+2</strong></td><td>Rapid</td><td>5</td><td>121</td></tr><tr><td><strong>7+5</strong></td><td>Rapid</td><td>6</td><td>75</td></tr></tbody></table></div><div class="player-stats-section-title">Все турниры игрока · 106</div><div class="player-stats-table-wrap"><table class="player-stats-table"><thead><tr><th>Дата</th><th>Лига</th><th>Контроль</th><th>Тип</th><th>Место</th><th>В команде</th><th>Очки</th><th>Рейтинг</th><th>Пикабу</th></tr></thead><tbody><tr><td>01.10.2026</td><td>2BL</td><td>3+0</td><td>Blitz</td><td class=""><strong>25</strong></td><td>1</td><td><strong>43</strong></td><td>2567</td><td>#10</td></tr><tr><td>28.09.2026</td><td>2BL</td><td>7+2</td><td>Rapid</td><td class=""><strong>15</strong></td><td>1</td><td><strong>27</strong></td><td>2431</td><td>#10</td></tr><tr><td>27.09.2026</td><td>—</td><td>5+0</td><td>Blitz</td><td class=""><strong>33</strong></td><td>1</td><td><strong>39</strong></td><td>2584</td><td>#10</td></tr><tr><td>24.09.2026</td><td>2BL</td><td>3+2</td><td>Blitz</td><td class=""><strong>16</strong></td><td>4</td><td><strong>33</strong></td><td>2604</td><td>#3</td></tr><tr><td>21.09.2026</td><td>2BL</td><td>7+5</td><td>Rapid</td><td class=""><strong>40</strong></td><td>4</td><td><strong>14</strong></td><td>2422</td><td>#4</td></tr><tr><td>20.09.2026</td><td>3BL</td><td>3+0</td><td>Blitz</td><td class=""><strong>7</strong></td><td>3</td><td><strong>44</strong></td><td>2553</td><td>#1</td></tr><tr><td>17.09.2026</td><td>4BL</td><td>5+0</td><td>Blitz</td><td class="ms"><strong>2</strong></td><td>1</td><td><strong>63</strong></td><td>2568</td><td>#1</td></tr><tr><td>14.09.2026</td><td>3BL</td><td>10+0</td><td>Rapid</td><td class=""><strong>74</strong></td><td>13</td><td><strong>3</strong></td><td>2440</td><td>#1</td></tr><tr><td>13.09.2026</td><td>3BL</td><td>3+2</td><td>Blitz</td><td class=""><strong>5</strong></td><td>2</td><td><strong>36</strong></td><td>2535</td><td>#8</td></tr><tr><td>10.09.2026</td><td>4BL</td><td>3+0</td><td>Blitz</td><td class=""><strong>10</strong></td><td>3</td><td><strong>40</strong></td><td>2523</td><td>#1</td></tr><tr><td>06.09.2026</td><td>4BL</td><td>5+0</td><td>Blitz</td><td class="mg"><strong>1</strong></td><td>1</td><td><strong>48</strong></td><td>2541</td><td>#7</td></tr><tr><td>03.09.2026</td><td>4BL</td><td>3+2</td><td>Blitz</td><td class=""><strong>13</strong></td><td>2</td><td><strong>25</strong></td><td>2504</td><td>#4</td></tr><tr><td>30.08.2026</td><td>4BL</td><td>3+0</td><td>Blitz</td><td class=""><strong>16</strong></td><td>2</td><td><strong>33</strong></td><td>2527</td><td>#4</td></tr><tr><td>27.08.2026</td><td>4BL</td><td>5+0</td><td>Blitz</td><td class=""><strong>12</strong></td><td>2</td><td><strong>30</strong></td><td>2568</td><td>#5</td></tr><tr><td>24.08.2026</td><td>3BL</td><td>10+0</td><td>Rapid</td><td class="mg"><strong>1</strong></td><td>1</td><td><strong>37</strong></td><td>2409</td><td>#5</td></tr><tr><td>23.08.2026</td><td>3BL</td><td>3+2</td><td>Blitz</td><td class=""><strong>10</strong></td><td>1</td><td><strong>29</strong></td><td>2601</td><td>#9</td></tr><tr><td>16.08.2026</td><td>3BL</td><td>5+0</td><td>Blitz</td><td class=""><strong>11</strong></td><td>2</td><td><strong>35</strong></td><td>2574</td><td>#3</td></tr><tr><td>13.08.2026</td><td>3BL</td><td>3+2</td><td>Blitz</td><td class=""><strong>21</strong></td><td>5</td><td><strong>25</strong></td><td>2585</td><td>#2</td></tr><tr><td>10.08.2026</td><td>4BL</td><td>7+5</td><td>Rapid</td><td class=""><strong>40</strong></td><td>4</td><td><strong>5</strong></td><td>2394</td><td>#4</td></tr><tr><td>09.08.2026</td><td>4BL</td><td>3+0</td><td>Blitz</td><td class="ms"><strong>2</strong></td><td>1</td><td><strong>50</strong></td><td>2563</td><td>#1</td></tr><tr><td>06.08.2026</td><td>5BL</td><td>5+0</td><td>Blitz</td><td class="mg"><strong>1</strong></td><td>1</td><td><strong>52</strong></td><td>2563</td><td>#1</td></tr><tr><td>03.08.2026</td><td>5BL</td><td>10+0</td><td>Rapid</td><td class=""><strong>6</strong></td><td>3</td><td><strong>17</strong></td><td>2390</td><td>#2</td></tr><tr><td>02.08.2026</td><td>5BL</td><td>3+2</td><td>Blitz</td><td class=""><strong>32</strong></td><td>2</td><td><strong>17</strong></td><td>2594</td><td>#6</td></tr><tr><td>30.07.2026</td><td>6BL</td><td>3+0</td><td>Blitz</td><td class="mg"><strong>1</strong></td><td>1</td><td><strong>80</strong></td><td>2578</td><td>#3</td></tr><tr><td>26.07.2026</td><td>5BL</td><td>5+0</td><td>Blitz</td><td class=""><strong>69</strong></td><td>4</td><td><strong>5</strong></td><td>2562</td><td>#10</td></tr><tr><td>23.07.2026</td><td>5BL</td><td>3+2</td><td>Blitz</td><td class=""><strong>4</strong></td><td>1</td><td><strong>30</strong></td><td>2558</td><td>#4</td></tr><tr><td>13.07.2026</td><td>5BL</td><td>10+0</td><td>Rapid</td><td class="ms"><strong>2</strong></td><td>1</td><td><strong>31</strong></td><td>2382</td><td>#1</td></tr><tr><td>12.07.2026</td><td>4BL</td><td>3+2</td><td>Blitz</td><td class=""><strong>7</strong></td><td>2</td><td><strong>30</strong></td><td>2600</td><td>#4</td></tr><tr><td>06.07.2026</td><td>4BL</td><td>7+2</td><td>Rapid</td><td class=""><strong>38</strong></td><td>3</td><td><strong>6</strong></td><td>2386</td><td>#8</td></tr><tr><td>05.07.2026</td><td>4BL</td><td>5+0</td><td>Blitz</td><td class="mg"><strong>1</strong></td><td>1</td><td><strong>51</strong></td><td>2608</td><td>#1</td></tr><tr><td>02.07.2026</td><td>3BL</td><td>3+2</td><td>Blitz</td><td class=""><strong>28</strong></td><td>3</td><td><strong>18</strong></td><td>2595</td><td>#8</td></tr><tr><td>28.06.2026</td><td>4BL</td><td>3+0</td><td>Blitz</td><td class="mg"><strong>1</strong></td><td>1</td><td><strong>69</strong></td><td>2586</td><td>#2</td></tr><tr><td>25.06.2026</td><td>5BL</td><td>5+0</td><td>Blitz</td><td class=""><strong>4</strong></td><td>2</td><td><strong>36</strong></td><td>2544</td><td>#1</td></tr><tr><td>22.06.2026</td><td>3BL</td><td>10+0</td><td>Rapid</td><td class="mg"><strong>1</strong></td><td>1</td><td><strong>43</strong></td><td>2415</td><td>#6</td></tr><tr><td>21.06.2026</td><td>4BL</td><td>3+2</td><td>Blitz</td><td class=""><strong>28</strong></td><td>2</td><td><strong>17</strong></td><td>2527</td><td>#8</td></tr><tr><td>18.06.2026</td><td>3BL</td><td>3+0</td><td>Blitz</td><td class="ms"><strong>2</strong></td><td>1</td><td><strong>52</strong></td><td>2556</td><td>#8</td></tr><tr><td>15.06.2026</td><td>4BL</td><td>7+2</td><td>Rapid</td><td class=""><strong>31</strong></td><td>6</td><td><strong>5</strong></td><td>2417</td><td>#2</td></tr><tr><td>14.06.2026</td><td>3BL</td><td>5+0</td><td>Blitz</td><td class=""><strong>12</strong></td><td>2</td><td><strong>36</strong></td><td>2588</td><td>#6</td></tr><tr><td>11.06.2026</td><td>3BL</td><td>3+2</td><td>Blitz</td><td class=""><strong>82</strong></td><td>11</td><td><strong>9</strong></td><td>2604</td><td>#4</td></tr><tr><td>08.06.2026</td><td>3BL</td><td>7+5</td><td>Rapid</td><td class=""><strong>58</strong></td><td>3</td><td><strong>4</strong></td><td>2472</td><td>#10</td></tr><tr><td>07.06.2026</td><td>3BL</td><td>3+0</td><td>Blitz</td><td class=""><strong>6</strong></td><td>1</td><td><strong>45</strong></td><td>2625</td><td>#5</td></tr><tr><td>04.06.2026</td><td>3BL</td><td>5+0</td><td>Blitz</td><td class=""><strong>9</strong></td><td>2</td><td><strong>38</strong></td><td>2610</td><td>#6</td></tr><tr><td>01.06.2026</td><td>4BL</td><td>10+0</td><td>Rapid</td><td class=""><strong>6</strong></td><td>1</td><td><strong>24</strong></td><td>2475</td><td>#1</td></tr><tr><td>31.05.2026</td><td>3BL</td><td>3+2</td><td>Blitz</td><td class=""><strong>4</strong></td><td>1</td><td><strong>38</strong></td><td>2591</td><td>#7</td></tr><tr><td>28.05.2026</td><td>3BL</td><td>3+0</td><td>Blitz</td><td class="mg"><strong>1</strong></td><td>1</td><td><strong>56</strong></td><td>2603</td><td>#4</td></tr><tr><td>25.05.2026</td><td>5BL</td><td>7+2</td><td>Rapid</td><td class=""><strong>5</strong></td><td>3</td><td><strong>21</strong></td><td>2483</td><td>#1</td></tr><tr><td>24.05.2026</td><td>4BL</td><td>5+0</td><td>Blitz</td><td class="mg"><strong>1</strong></td><td>1</td><td><strong>55</strong></td><td>2585</td><td>#1</td></tr><tr><td>21.05.2026</td><td>5BL</td><td>3+2</td><td>Blitz</td><td class="mb"><strong>3</strong></td><td>1</td><td><strong>34</strong></td><td>2585</td><td>#3</td></tr><tr><td>17.05.2026</td><td>4BL</td><td>3+0</td><td>Blitz</td><td class=""><strong>6</strong></td><td>1</td><td><strong>38</strong></td><td>2558</td><td>#8</td></tr><tr><td>14.05.2026</td><td>5BL</td><td>5+0</td><td>Blitz</td><td class="ms"><strong>2</strong></td><td>2</td><td><strong>35</strong></td><td>2509</td><td>#2</td></tr><tr><td>10.05.2026</td><td>4BL</td><td>3+2</td><td>Blitz</td><td class=""><strong>30</strong></td><td>3</td><td><strong>16</strong></td><td>2549</td><td>#8</td></tr><tr><td>07.05.2026</td><td>5BL</td><td>3+0</td><td>Blitz</td><td class="ms"><strong>2</strong></td><td>1</td><td><strong>59</strong></td><td>2544</td><td>#3</td></tr><tr><td>04.05.2026</td><td>6BL</td><td>7+2</td><td>Rapid</td><td class="mg"><strong>1</strong></td><td>1</td><td><strong>62</strong></td><td>2520</td><td>#1</td></tr><tr><td>03.05.2026</td><td>6BL</td><td>5+0</td><td>Blitz</td><td class="mb"><strong>3</strong></td><td>1</td><td><strong>45</strong></td><td>2591</td><td>#2</td></tr><tr><td>30.04.2026</td><td>7BL</td><td>3+2</td><td>Blitz</td><td class=""><strong>7</strong></td><td>2</td><td><strong>19</strong></td><td>2547</td><td>#3</td></tr><tr><td>27.04.2026</td><td>6BL</td><td>7+5</td><td>Rapid</td><td class=""><strong>6</strong></td><td>1</td><td><strong>10</strong></td><td>2515</td><td>#4</td></tr><tr><td>26.04.2026</td><td>8BL</td><td>3+0</td><td>Blitz</td><td class="mg"><strong>1</strong></td><td>1</td><td><strong>58</strong></td><td>2570</td><td>#2</td></tr><tr><td>23.04.2026</td><td>9BL</td><td>5+0</td><td>Blitz</td><td class="mg"><strong>1</strong></td><td>1</td><td><strong>63</strong></td><td>2610</td><td>#1</td></tr><tr><td>19.04.2026</td><td>9BL</td><td>3+2</td><td>Blitz</td><td class="mg"><strong>1</strong></td><td>1</td><td><strong>40</strong></td><td>2656</td><td>#5</td></tr><tr><td>16.04.2026</td><td>8BL</td><td>3+0</td><td>Blitz</td><td class=""><strong>5</strong></td><td>1</td><td><strong>41</strong></td><td>2615</td><td>#8</td></tr><tr><td>12.04.2026</td><td>9BL</td><td>5+0</td><td>Blitz</td><td class="mg"><strong>1</strong></td><td>1</td><td><strong>49</strong></td><td>2634</td><td>#1</td></tr><tr><td>09.04.2026</td><td>10BL</td><td>3+2</td><td>Blitz</td><td class="ms"><strong>2</strong></td><td>2</td><td><strong>47</strong></td><td>2627</td><td>#1</td></tr><tr><td>05.04.2026</td><td>11BL</td><td>3+0</td><td>Blitz</td><td class="mg"><strong>1</strong></td><td>1</td><td><strong>61</strong></td><td>2640</td><td>#1</td></tr><tr><td>02.04.2026</td><td>12BL</td><td>5+0</td><td>Blitz</td><td class="mg"><strong>1</strong></td><td>1</td><td><strong>65</strong></td><td>2651</td><td>#2</td></tr><tr><td>29.03.2026</td><td>13BL</td><td>3+2</td><td>Blitz</td><td class="ms"><strong>2</strong></td><td>1</td><td><strong>25</strong></td><td>2642</td><td>#3</td></tr><tr><td>16.03.2026</td><td>4BL</td><td>7+5</td><td>Rapid</td><td class="mb"><strong>3</strong></td><td>1</td><td><strong>32</strong></td><td>2500</td><td>#1</td></tr><tr><td>12.03.2026</td><td>11BL</td><td>5+0</td><td>Blitz</td><td class="mb"><strong>3</strong></td><td>1</td><td><strong>34</strong></td><td>2565</td><td>#6</td></tr><tr><td>01.03.2026</td><td>9BL</td><td>5+0</td><td>Blitz</td><td class=""><strong>57</strong></td><td>9</td><td><strong>0</strong></td><td>2544</td><td>#9</td></tr><tr><td>23.02.2026</td><td>4BL</td><td>7+5</td><td>Rapid</td><td class=""><strong>26</strong></td><td>3</td><td><strong>10</strong></td><td>2516</td><td>#7</td></tr><tr><td>12.02.2026</td><td>9BL</td><td>3+0</td><td>Blitz</td><td class=""><strong>4</strong></td><td>1</td><td><strong>45</strong></td><td>2570</td><td>#2</td></tr><tr><td>22.01.2026</td><td>8BL</td><td>3+0</td><td>Blitz</td><td class=""><strong>16</strong></td><td>1</td><td><strong>26</strong></td><td>2593</td><td>#8</td></tr><tr><td>18.01.2026</td><td>8BL</td><td>5+0</td><td>Blitz</td><td class=""><strong>11</strong></td><td>2</td><td><strong>24</strong></td><td>2591</td><td>#7</td></tr><tr><td>18.12.2025</td><td>11BL</td><td>5+0</td><td>Blitz</td><td class=""><strong>42</strong></td><td>9</td><td><strong>3</strong></td><td>2603</td><td>#3</td></tr><tr><td>17.08.2025</td><td>8BL</td><td>3+2</td><td>Blitz</td><td class=""><strong>20</strong></td><td>4</td><td><strong>19</strong></td><td>2551</td><td>#3</td></tr><tr><td>14.08.2025</td><td>7BL</td><td>3+0</td><td>Blitz</td><td class=""><strong>8</strong></td><td>1</td><td><strong>33</strong></td><td>2557</td><td>#8</td></tr><tr><td>19.06.2025</td><td>6BL</td><td>5+0</td><td>Blitz</td><td class="mg"><strong>1</strong></td><td>1</td><td><strong>59</strong></td><td>2558</td><td>#2</td></tr><tr><td>15.06.2025</td><td>6BL</td><td>3+2</td><td>Blitz</td><td class=""><strong>70</strong></td><td>10</td><td><strong>5</strong></td><td>2582</td><td>#7</td></tr><tr><td>12.06.2025</td><td>7BL</td><td>3+0</td><td>Blitz</td><td class="mg"><strong>1</strong></td><td>1</td><td><strong>55</strong></td><td>2569</td><td>#3</td></tr><tr><td>08.06.2025</td><td>7BL</td><td>5+0</td><td>Blitz</td><td class="mg"><strong>1</strong></td><td>1</td><td><strong>68</strong></td><td>2573</td><td>#6</td></tr><tr><td>05.06.2025</td><td>7BL</td><td>3+2</td><td>Blitz</td><td class="mg"><strong>1</strong></td><td>1</td><td><strong>43</strong></td><td>2523</td><td>#4</td></tr><tr><td>29.05.2025</td><td>5BL</td><td>5+0</td><td>Blitz</td><td class=""><strong>11</strong></td><td>1</td><td><strong>28</strong></td><td>2564</td><td>#8</td></tr><tr><td>22.05.2025</td><td>4BL</td><td>3+0</td><td>Blitz</td><td class=""><strong>15</strong></td><td>2</td><td><strong>34</strong></td><td>2531</td><td>#8</td></tr><tr><td>04.05.2025</td><td>4BL</td><td>3+2</td><td>Blitz</td><td class=""><strong>5</strong></td><td>1</td><td><strong>36</strong></td><td>2661</td><td>#1</td></tr><tr><td>27.04.2025</td><td>4BL</td><td>5+0</td><td>Blitz</td><td class=""><strong>17</strong></td><td>3</td><td><strong>26</strong></td><td>2599</td><td>#5</td></tr><tr><td>24.04.2025</td><td>3BL</td><td>3+2</td><td>Blitz</td><td class="mb"><strong>3</strong></td><td>1</td><td><strong>40</strong></td><td>2600</td><td>#9</td></tr><tr><td>20.04.2025</td><td>2BL</td><td>3+0</td><td>Blitz</td><td class=""><strong>10</strong></td><td>3</td><td><strong>45</strong></td><td>2573</td><td>#9</td></tr><tr><td>17.04.2025</td><td>2BL</td><td>5+0</td><td>Blitz</td><td class=""><strong>4</strong></td><td>1</td><td><strong>50</strong></td><td>2589</td><td>#6</td></tr><tr><td>13.04.2025</td><td>2BL</td><td>3+2</td><td>Blitz</td><td class=""><strong>9</strong></td><td>3</td><td><strong>34</strong></td><td>2602</td><td>#5</td></tr><tr><td>10.04.2025</td><td>3BL</td><td>3+0</td><td>Blitz</td><td class="mb"><strong>3</strong></td><td>1</td><td><strong>60</strong></td><td>2586</td><td>#1</td></tr><tr><td>06.04.2025</td><td>3BL</td><td>5+0</td><td>Blitz</td><td class=""><strong>11</strong></td><td>5</td><td><strong>35</strong></td><td>2585</td><td>#2</td></tr><tr><td>03.04.2025</td><td>3BL</td><td>3+2</td><td>Blitz</td><td class=""><strong>5</strong></td><td>2</td><td><strong>46</strong></td><td>2605</td><td>#5</td></tr><tr><td>30.03.2025</td><td>4BL</td><td>3+0</td><td>Blitz</td><td class=""><strong>7</strong></td><td>3</td><td><strong>50</strong></td><td>2576</td><td>#1</td></tr><tr><td>27.03.2025</td><td>5BL</td><td>5+0</td><td>Blitz</td><td class="ms"><strong>2</strong></td><td>1</td><td><strong>45</strong></td><td>2610</td><td>#2</td></tr><tr><td>23.03.2025</td><td>6BL</td><td>3+2</td><td>Blitz</td><td class=""><strong>10</strong></td><td>2</td><td><strong>28</strong></td><td>2548</td><td>#1</td></tr><tr><td>20.03.2025</td><td>7BL</td><td>3+0</td><td>Blitz</td><td class=""><strong>66</strong></td><td>12</td><td><strong>5</strong></td><td>2552</td><td>#2</td></tr><tr><td>16.03.2025</td><td>8BL</td><td>5+0</td><td>Blitz</td><td class="mg"><strong>1</strong></td><td>1</td><td><strong>46</strong></td><td>2518</td><td>#1</td></tr><tr><td>13.03.2025</td><td>9BL</td><td>3+2</td><td>Blitz</td><td class=""><strong>8</strong></td><td>2</td><td><strong>30</strong></td><td>2543</td><td>#1</td></tr><tr><td>10.03.2025</td><td>1BL</td><td>7+2</td><td>Rapid</td><td class=""><strong>48</strong></td><td>2</td><td><strong>16</strong></td><td>2417</td><td>#8</td></tr><tr><td>06.03.2025</td><td>9BL</td><td>5+0</td><td>Blitz</td><td class="mg"><strong>1</strong></td><td>1</td><td><strong>52</strong></td><td>2589</td><td>#1</td></tr><tr><td>03.03.2025</td><td>1BL</td><td>7+5</td><td>Rapid</td><td class=""><strong>28</strong></td><td>3</td><td><strong>20</strong></td><td>2447</td><td>#3</td></tr><tr><td>02.03.2025</td><td>10BL</td><td>3+2</td><td>Blitz</td><td class="ms"><strong>2</strong></td><td>2</td><td><strong>60</strong></td><td>2573</td><td>#1</td></tr><tr><td>24.02.2025</td><td>2BL</td><td>10+0</td><td>Rapid</td><td class="mg"><strong>1</strong></td><td>1</td><td><strong>59</strong></td><td>2505</td><td>#1</td></tr><tr><td>13.02.2025</td><td>15BL</td><td>5+0</td><td>Blitz</td><td class="ms"><strong>2</strong></td><td>2</td><td><strong>48</strong></td><td>2478</td><td>#1</td></tr><tr><td>09.02.2025</td><td>16BL</td><td>3+2</td><td>Blitz</td><td class=""><strong>15</strong></td><td>2</td><td><strong>21</strong></td><td>2496</td><td>#2</td></tr><tr><td>03.02.2025</td><td>5BL</td><td>10+0</td><td>Rapid</td><td class=""><strong>10</strong></td><td>2</td><td><strong>26</strong></td><td>2596</td><td>#3</td></tr><tr><td>02.02.2025</td><td>18BL</td><td>5+0</td><td>Blitz</td><td class="mb"><strong>3</strong></td><td>1</td><td><strong>31</strong></td><td>2575</td><td>#2</td></tr></tbody></table></div><div class="player-stats-section-title">За все годы</div><div class="player-stats-period">Турниров: <strong>106</strong> · турнирных очков: <strong>3738</strong> · призовых мест: <strong>41</strong> · призовых турниров: <strong>39%</strong> · командных побед: <strong>28</strong></div></div>
+    <div id="playerStatsBody" class="player-stats-body"></div>
   </div>
 </div>
 
@@ -1499,7 +1610,7 @@ function openPlayerStats(username){
   ].forEach(x=>h+='<div class="player-stats-card"><strong>'+x[0]+'</strong><span>'+x[1]+'</span></div>');
   h+='</div>';
   h+='<div class="player-stats-section-title">Blitz / Rapid</div>';
-  h+='<div class="player-stats-table-wrap"><table class="player-stats-table"><thead><tr><th>Показатель</th><th>Blitz</th><th>Rapid</th><th>Всего</th></tr></thead><tbody>';
+  h+='<div class="player-stats-table-wrap"><table class="player-stats-table player-stats-overview-table"><thead><tr><th>Показатель</th><th>Blitz</th><th>Rapid</th><th>Всего</th></tr></thead><tbody>';
   const blitz=playerStatsSummary(currentRows.filter(r=>r.speed==='Blitz')),rapid=playerStatsSummary(currentRows.filter(r=>r.speed==='Rapid'));
   h+='<tr><td class="left">Турниры</td><td>'+blitz.tournaments+'</td><td>'+rapid.tournaments+'</td><td>'+cur.tournaments+'</td></tr>';
   h+='<tr><td class="left">Турнирные очки</td><td>'+blitz.score+'</td><td>'+rapid.score+'</td><td>'+cur.score+'</td></tr>';
@@ -1508,13 +1619,13 @@ function openPlayerStats(username){
   h+='<div class="player-stats-section-title">По форматам</div>';
   const controls=playerStatsControls(currentRows);
   if(controls.length){
-    h+='<div class="player-stats-table-wrap"><table class="player-stats-table"><thead><tr><th>Контроль</th><th>Тип</th><th>Турниров</th><th>Турнирные очки</th></tr></thead><tbody>';
+    h+='<div class="player-stats-table-wrap"><table class="player-stats-table player-stats-controls-table"><thead><tr><th>Контроль</th><th>Тип</th><th>Турниров</th><th>Турнирные очки</th></tr></thead><tbody>';
     controls.forEach(r=>h+='<tr><td><strong>'+escHtml(r.tc)+'</strong></td><td>'+escHtml(r.speed)+'</td><td>'+r.tournaments+'</td><td>'+r.score+'</td></tr>');
     h+='</tbody></table></div>';
   }
   h+='<div class="player-stats-section-title">Все турниры игрока · '+all.tournaments+'</div>';
   if(allRows.length){
-    h+='<div class="player-stats-table-wrap"><table class="player-stats-table"><thead><tr><th>Дата</th><th>Лига</th><th>Контроль</th><th>Тип</th><th>Место</th><th>В команде</th><th>Очки</th><th>Рейтинг</th><th>Пикабу</th></tr></thead><tbody>';
+    h+='<div class="player-stats-table-wrap"><table class="player-stats-table player-stats-all-table"><thead><tr><th>Дата</th><th>Лига</th><th>Контроль</th><th>Тип</th><th>Место</th><th>В команде</th><th>Очки</th><th>Рейтинг</th><th>Пикабу</th></tr></thead><tbody>';
     allRows.forEach(r=>{
       const rankClass=r.rank===1?'mg':r.rank===2?'ms':r.rank===3?'mb':'';
       h+='<tr><td>'+escHtml(formatDisplayDate(r.date))+'</td><td>'+escHtml(r.league)+'</td><td>'+escHtml(r.tc)+'</td><td>'+escHtml(r.speed)+'</td><td class="'+rankClass+'"><strong>'+ (r.rank||'—') +'</strong></td><td>'+ (r.teamPos||'—') +'</td><td><strong>'+r.score+'</strong></td><td>'+ (r.rating||'—') +'</td><td>'+ (r.teamRank?'#'+r.teamRank:'—') +'</td></tr>';
